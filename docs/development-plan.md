@@ -95,69 +95,69 @@
 
   * **2.1 Core `MeetingScreen.vue` Structure**
 
-      * [ ] **Create `src/views/MeetingScreen.vue`:**
+      * [x] **Create `src/views/MeetingScreen.vue`:**
           * Add basic `<template>`, `<script setup>`, and `<style scoped>` blocks.
-      * [ ] **Integrate `MeetingScreen` into `App.vue`:**
+      * [x] **Integrate `MeetingScreen` into `App.vue`:**
           * Import `MeetingScreen` in `App.vue`.
           * Use `v-if` to conditionally render `MeetingScreen` based on `gameStore.currentScreen === 'meeting'`. (Use `useGameStore` in `App.vue`).
 
   * **2.2 Reusable UI Components for Meeting Screen**
 
-      * [ ] **`src/components/TextInput.vue`:**
-          * [ ] Props: `label`, `placeholder`, `modelValue`, `maxLength`.
-          * [ ] Emit `update:modelValue` on input.
-          * [ ] Basic styling (glassmorphism effect).
-      * [ ] **`src/components/NumberInput.vue`:**
-          * [ ] Props: `label`, `placeholder`, `modelValue`, `min`, `max`.
-          * [ ] Emit `update:modelValue` (ensure value is parsed as a number).
-          * [ ] Basic styling (glassmorphism effect).
-      * [ ] **`src/components/ActionButton.vue`:**
-          * [ ] Props: `label`, `disabled` (boolean).
-          * [ ] Emit `click` event.
-          * [ ] Apply the gold/orange button styling. Define hover/active states.
-      * [ ] **`src/components/DifficultyButton.vue`:**
-          * [ ] Props: `label`, `value`, `isSelected`.
-          * [ ] Emit `click` event with `value`.
-          * [ ] Styling for default, hover, and `isSelected` states (e.g., different background/border).
+      * [x] **`src/components/TextInput.vue`:**
+          * [x] Props: `label`, `placeholder`, `modelValue`, `maxLength`.
+          * [x] Emit `update:modelValue` on input.
+          * [x] Basic styling (glassmorphism effect).
+      * [x] **`src/components/NumberInput.vue`:**
+          * [x] Props: `label`, `placeholder`, `modelValue`, `min`, `max`.
+          * [x] Emit `update:modelValue` (ensure value is parsed as a number).
+          * [x] Basic styling (glassmorphism effect).
+      * [x] **`src/components/ActionButton.vue`:**
+          * [x] Props: `label`, `disabled` (boolean).
+          * [x] Emit `click` event.
+          * [x] Apply the gold/orange button styling. Define hover/active states.
+      * [x] **`src/components/DifficultyButton.vue`:**
+          * [x] Props: `label`, `value`, `isSelected`.
+          * [x] Emit `click` event with `value`.
+          * [x] Styling for default, hover, and `isSelected` states (e.g., different background/border).
 
   * **2.3 `MeetingScreen.vue` Content & Logic**
 
-      * [ ] **Add Castle Background Image:** Position `meeting-screen.png` within `MeetingScreen.vue` using CSS (e.g., `background-image`, `background-size`, `background-position`).
-      * [ ] **"MYSTICAL NUMBER CASTLE" Title:**
+      * [x] **Add Castle Background Image:** Position `meeting-screen.png` within `MeetingScreen.vue` using CSS (e.g., `background-image`, `background-size`, `background-position`).
+      * [x] **"MYSTICAL NUMBER CASTLE" Title:**
           * Add `<h1>` for the main title.
           * Add subtitle "THE GENIE'S CHALLENGE".
           * Apply `font-size`, `color` (gold/yellow from palette), `text-shadow` for shine.
-      * [ ] **"Your Magical Identity" Section:**
-          * [ ] Use `TextInput.vue` for `playerName`.
-          * [ ] Bind `v-model` to `gameStore.playerName`.
-          * [ ] Display character counter `(gameStore.playerName.length)/20`.
-      * [ ] **"Set Your Number Range" Section:**
-          * [ ] Use `NumberInput.vue` for `minRange` and `maxRange`.
-          * [ ] Bind `v-model` to `gameStore.minRange` and `gameStore.maxRange`.
-          * [ ] Display "Current range: X to Y (Z numbers)" using a getter from `gameStore`.
-          * [ ] Add client-side validation (e.g., `minRange < maxRange`). Provide visual feedback if invalid.
-      * [ ] **"Select Difficulty" Section:**
-          * [ ] Use `DifficultyButton.vue` components (`Easy`, `Medium`, `Hard`).
-          * [ ] On click, call `gameStore.setDifficulty(value)`.
-          * [ ] Pass `isSelected` prop based on `gameStore.difficulty`.
-          * [ ] Add descriptions for each difficulty (Unlimited guesses, Moderate clues, etc.).
-      * [ ] **"Begin Adventure" Button:**
-          * [ ] Use `ActionButton.vue`.
-          * [ ] `disabled` prop should be true if `playerName` is empty, range is invalid, or `difficulty` is not selected.
-          * [ ] On `click`, call `gameStore.startGame()`.
+      * [x] **"Your Magical Identity" Section:**
+          * [x] Use `TextInput.vue` for `playerName`.
+          * [x] Bind `v-model` to `gameStore.playerName`.
+          * [x] Display character counter `(gameStore.playerName.length)/20`.
+      * [x] **"Set Your Number Range" Section:**
+          * [x] Use `NumberInput.vue` for `minRange` and `maxRange`.
+          * [x] Bind `v-model` to `gameStore.minRange` and `gameStore.maxRange`.
+          * [x] Display "Current range: X to Y (Z numbers)" using a getter from `gameStore`.
+          * [x] Add client-side validation (e.g., `minRange < maxRange`). Provide visual feedback if invalid.
+      * [x] **"Select Difficulty" Section:**
+          * [x] Use `DifficultyButton.vue` components (`Easy`, `Medium`, `Hard`).
+          * [x] On click, call `gameStore.setDifficulty(value)`.
+          * [x] Pass `isSelected` prop based on `gameStore.difficulty`.
+          * [x] Add descriptions for each difficulty (Unlimited guesses, Moderate clues, etc.).
+      * [x] **"Begin Adventure" Button:**
+          * [x] Use `ActionButton.vue`.
+          * [x] `disabled` prop should be true if `playerName` is empty, range is invalid, or `difficulty` is not selected.
+          * [x] On `click`, call `gameStore.startGame()`.
 
   * **2.4 Update `gameStore.js` Actions & Getters for Meeting Screen**
 
-      * [ ] **`setPlayerName(name)` action:** Updates `playerName` state.
-      * [ ] **`setRange(min, max)` action:** Updates `minRange` and `maxRange` states.
-      * [ ] **`setDifficulty(difficulty)` action:** Updates `difficulty` state and initializes `attemptsLeft` based on `maxAttempts[difficulty]`.
-      * [ ] **`startGame()` action:**
+      * [x] **`setPlayerName(name)` action:** Updates `playerName` state.
+      * [x] **`setRange(min, max)` action:** Updates `minRange` and `maxRange` states.
+      * [x] **`setDifficulty(difficulty)` action:** Updates `difficulty` state and initializes `attemptsLeft` based on `maxAttempts[difficulty]`.
+      * [x] **`startGame()` action:**
           * Generates `targetNumber` using `Math.random()` within `minRange` and `maxRange`.
           * Sets `attemptsUsed = 0`.
           * Sets `gameWon = false`.
           * Sets `currentScreen = 'game'`.
-      * [ ] **`currentRangeDisplay` getter:** Returns a formatted string like "1 to 100 (99 numbers)".
-      * [ ] **Initial Commit:** Commit Meeting Screen functionality.
+      * [x] **`currentRangeDisplay` getter:** Returns a formatted string like "1 to 100 (99 numbers)".
+      * [x] **Initial Commit:** Commit Meeting Screen functionality.
 
 -----
 

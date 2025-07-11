@@ -1,10 +1,40 @@
 
 <template>
-  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; gap: 2rem;">
-    <p style="font-family: 'CormorantGaramondItalic', serif; font-size: 3rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    <p style="font-family: 'CormorantGaramondVariable', serif; font-size: 3rem;">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    <p style="font-family: 'IndieFlower', cursive; font-size: 3rem;">Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-    <p style="font-family: 'ShadowsIntoLight', cursive; font-size: 3rem;">Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
+  <div id="app">
+    <MeetingScreen v-if="gameStore.currentScreen === 'meeting'" />
+    <!-- GameScreen será adicionado na Fase 3 -->
+    <!-- EndingScreen será adicionado na Fase 4 -->
   </div>
 </template>
+
+<script setup>
+import { useGameStore } from './stores/gameStore';
+import MeetingScreen from './views/MeetingScreen.vue';
+
+const gameStore = useGameStore();
+</script>
+
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  height: 100vh;
+  overflow: hidden;
+}
+</style>
 
