@@ -1,6 +1,15 @@
 
 <template>
   <div id="app">
+    <!-- Otimizador de performance -->
+    <PerformanceOptimizer />
+    
+    <!-- Efeitos atmosféricos (névoa e estrelas) -->
+    <AtmosphericEffects />
+    
+    <!-- Sistema de partículas (vagalumes) -->
+    <ParticleSystem />
+    
     <MeetingScreen v-if="gameStore.currentScreen === 'meeting'" />
     <!-- GameScreen será adicionado na Fase 3 -->
     <!-- EndingScreen será adicionado na Fase 4 -->
@@ -10,6 +19,9 @@
 <script setup>
 import { useGameStore } from './stores/gameStore';
 import MeetingScreen from './views/MeetingScreen.vue';
+import ParticleSystem from './components/ParticleSystem.vue';
+import AtmosphericEffects from './components/AtmosphericEffects.vue';
+import PerformanceOptimizer from './components/PerformanceOptimizer.vue';
 
 const gameStore = useGameStore();
 </script>
