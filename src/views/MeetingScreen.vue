@@ -1,5 +1,8 @@
 <template>
   <div class="meeting-screen">
+    <!-- Overlay de fade-in -->
+    <div class="fade-overlay" ref="fadeOverlay"></div>
+    
     <!-- Título Principal (acima do conteúdo) -->
     <div class="title-section">
       <h1 class="main-title">MYSTICAL NUMBER CASTLE</h1>
@@ -75,8 +78,8 @@
         <div class="section">
           <ActionButton
             label="Begin Journey"
-            :disabled="!canStartGame"
-            @click="gameStore.startGame"
+            :disabled="!canStartGame || isFading"
+            @click="handleBeginJourney"
             class="begin-journey-btn"
           />
         </div>
@@ -92,14 +95,17 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useGameStore } from '../stores/gameStore';
+import { gsap } from 'gsap';
 import TextInput from '../components/TextInput.vue';
 import NumberInput from '../components/NumberInput.vue';
 import ActionButton from '../components/ActionButton.vue';
 import DifficultyButton from '../components/DifficultyButton.vue';
 
 const gameStore = useGameStore();
+const fadeOverlay = ref(null);
+const isFading = ref(false);
 
 const difficulties = [
   {
@@ -128,4 +134,76 @@ const canStartGame = computed(() => {
          isRangeValid.value && 
          gameStore.difficulty !== null;
 });
-</script> 
+
+// Função para iniciar o fade-in de 10 segundos
+const startFadeIn = () => {
+  if (isFading.value) return;
+  
+  console.log('🚀 Iniciando fade-in de 10 segundos no Begin Journey...');
+  isFading.value = true;
+  
+  // Reset da animação
+  gsap.set(fadeOverlay.value, {
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    display: 'block'
+  });
+  
+  // Animação de fade-in de 10 segundos
+  gsap.to(fadeOverlay.value, {
+    backgroundColor: 'rgba(0, 0, 0, 1)',
+    duration: 10,
+    ease: 'none',
+    onStart: () => {
+      console.log('✅ Fade-in iniciado');
+    },
+    onUpdate: function() {
+      const progress = Math.round(this.progress() * 100);
+      console.log(`📊 Progresso do fade-in: ${progress}%`);
+    },
+    onComplete: () => {
+      console.log('🎉 Fade-in completo! Redirecionando para GameScreen...');
+      isFading.value = false;
+      // Após o fade-in completo, ir diretamente para a tela de jogo
+      gameStore.setScreen('game');
+      // Configurar o jogo
+      gameStore.targetNumber = Math.floor(Math.random() * (gameStore.maxRange - gameStore.minRange + 1)) + gameStore.minRange;
+      gameStore.attemptsUsed = 0;
+      gameStore.gameWon = false;
+      console.log('🎮 Jogo configurado - número alvo:', gameStore.targetNumber);
+      console.log('🎯 Transição completa - agora na GameScreen');
+    }
+  });
+};
+
+// Função para lidar com o clique do botão
+const handleBeginJourney = () => {
+  if (canStartGame.value && !isFading.value) {
+    startFadeIn();
+  }
+};
+
+onMounted(() => {
+  console.log('🎬 MeetingScreen montado');
+  console.log('🎯 Elemento fadeOverlay:', fadeOverlay.value);
+});
+</script>
+
+<style scoped>
+/* Overlay de fade-in */
+.fade-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 9999;
+  pointer-events: none;
+  display: none;
+}
+
+/* Quando estiver fazendo fade, permitir interação */
+.fade-overlay.animating {
+  pointer-events: auto;
+}
+</style> 
