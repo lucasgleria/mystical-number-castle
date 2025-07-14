@@ -1,6 +1,7 @@
 
 <template>
   <div id="app">
+    <GlobalOverlay :visible="gameStore.overlayVisible" />
     <!-- Otimizador de performance -->
     <PerformanceOptimizer />
     
@@ -37,6 +38,7 @@ import AtmosphericEffects from './components/AtmosphericEffects.vue';
 import PerformanceOptimizer from './components/PerformanceOptimizer.vue';
 import GameScreenEntrance from './components/GameScreenEntrance.vue';
 import DebugPanel from './components/DebugPanel.vue';
+import GlobalOverlay from './components/GlobalOverlay.vue';
 
 const gameStore = useGameStore();
 </script>

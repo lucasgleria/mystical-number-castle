@@ -95,7 +95,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref } from 'vue';
 import { useGameStore } from '../stores/gameStore';
 import { gsap } from 'gsap';
 import TextInput from '../components/TextInput.vue';
@@ -169,6 +169,7 @@ const startFadeIn = () => {
       gameStore.targetNumber = Math.floor(Math.random() * (gameStore.maxRange - gameStore.minRange + 1)) + gameStore.minRange;
       gameStore.attemptsUsed = 0;
       gameStore.gameWon = false;
+      // O overlay global permanece ativado para cobrir a transição
       console.log('🎮 Jogo configurado - número alvo:', gameStore.targetNumber);
       console.log('🎯 Transição completa - agora na GameScreen');
     }
@@ -178,14 +179,25 @@ const startFadeIn = () => {
 // Função para lidar com o clique do botão
 const handleBeginJourney = () => {
   if (canStartGame.value && !isFading.value) {
-    startFadeIn();
+    isFading.value = true;
+    gameStore.showOverlay();
+    // Começa o fade-in do overlay global
+    gsap.set('.global-overlay', { opacity: 0 });
+    gsap.to('.global-overlay', {
+      opacity: 1,
+      duration: 5,
+      onComplete: () => {
+        // Após o fade-in, troca para GameScreen
+        gameStore.setScreen('game');
+        // Configurar o jogo
+        gameStore.targetNumber = Math.floor(Math.random() * (gameStore.maxRange - gameStore.minRange + 1)) + gameStore.minRange;
+        gameStore.attemptsUsed = 0;
+        gameStore.gameWon = false;
+        isFading.value = false;
+      }
+    });
   }
 };
-
-onMounted(() => {
-  console.log('🎬 MeetingScreen montado');
-  console.log('🎯 Elemento fadeOverlay:', fadeOverlay.value);
-});
 </script>
 
 <style scoped>

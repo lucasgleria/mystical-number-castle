@@ -17,7 +17,8 @@ export const useGameStore = defineStore('game', {
     isTransitioning: false,
     isGameEntering: false,
     transitionPhase: 'idle', // 'idle', 'castle-zoom', 'fade-to-black', 'game-entrance'
-    animationProgress: 0 // 0-100 para controle de progresso
+    animationProgress: 0, // 0-100 para controle de progresso
+    overlayVisible: false // controla visibilidade do overlay preto
   }),
   actions: {
     setScreen(screen) {
@@ -96,6 +97,12 @@ export const useGameStore = defineStore('game', {
     
     loadLeaderboard() {
       // Placeholder - será implementado na Fase 4
+    },
+    showOverlay() {
+      this.overlayVisible = true;
+    },
+    hideOverlay() {
+      this.overlayVisible = false;
     }
   },
   getters: {

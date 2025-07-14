@@ -1,8 +1,5 @@
 <template>
   <div class="game-screen">
-    <!-- Overlay de fade-out -->
-    <div class="fade-overlay" ref="fadeOverlay"></div>
-    
     <div class="game-content">
       <h1>Game Screen</h1>
       <p>Your adventure begins here...</p>
@@ -17,53 +14,23 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useGameStore } from '../stores/gameStore';
 import { gsap } from 'gsap';
 
 const gameStore = useGameStore();
-const fadeOverlay = ref(null);
-
-// Função para iniciar o fade-out de 10 segundos
-const startFadeOut = () => {
-  console.log('🌅 Iniciando fade-out de 10 segundos na GameScreen...');
-  
-  // Configurar estado inicial (completamente preto)
-  gsap.set(fadeOverlay.value, {
-    backgroundColor: 'rgba(0, 0, 0, 1)',
-    display: 'block'
-  });
-  
-  // Animação de fade-out de 10 segundos (preto para transparente)
-  gsap.to(fadeOverlay.value, {
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-    duration: 10,
-    ease: 'none',
-    onStart: () => {
-      console.log('✅ Fade-out iniciado');
-    },
-    onUpdate: function() {
-      const progress = Math.round(this.progress() * 100);
-      console.log(`📊 Progresso do fade-out: ${progress}%`);
-    },
-    onComplete: () => {
-      console.log('🎉 Fade-out completo! GameScreen totalmente visível');
-      // Esconder o overlay após a animação
-      gsap.set(fadeOverlay.value, {
-        display: 'none'
-      });
-    }
-  });
-};
 
 onMounted(() => {
-  console.log('🎮 GameScreen montado');
-  console.log('🎯 Elemento fadeOverlay:', fadeOverlay.value);
-  
-  // Iniciar fade-out automaticamente quando o componente for montado
+  // Pequeno delay para garantir que o DOM está pronto
   setTimeout(() => {
-    startFadeOut();
-  }, 100); // Pequeno delay para garantir que o DOM está pronto
+    gsap.to('.global-overlay', {
+      opacity: 0,
+      duration: 5,
+      onComplete: () => {
+        gameStore.hideOverlay();
+      }
+    });
+  }, 200); // delay de 200ms
 });
 </script>
 
