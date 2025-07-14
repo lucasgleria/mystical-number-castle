@@ -1,21 +1,24 @@
 <template>
   <div class="stats-panel">
-    <div class="stat-row">
-      <span class="stat-label">Range:</span>
-      <span class="stat-value">{{ currentRange }}</span>
+    <div class="stats-content">
+      <div class="stat-row">
+        <span class="stat-label">Range:</span>
+        <span class="stat-value">{{ currentRange }}</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Tentativas:</span>
+        <span class="stat-value">{{ attemptsUsed }} / {{ maxAttemptsDisplay }}</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Restantes:</span>
+        <span class="stat-value">{{ attemptsLeftDisplay }}</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Dificuldade:</span>
+        <span class="stat-value">{{ difficultyLabel }}</span>
+      </div>
     </div>
-    <div class="stat-row">
-      <span class="stat-label">Tentativas:</span>
-      <span class="stat-value">{{ attemptsUsed }} / {{ maxAttemptsDisplay }}</span>
-    </div>
-    <div class="stat-row">
-      <span class="stat-label">Restantes:</span>
-      <span class="stat-value">{{ attemptsLeftDisplay }}</span>
-    </div>
-    <div class="stat-row">
-      <span class="stat-label">Dificuldade:</span>
-      <span class="stat-value">{{ difficultyLabel }}</span>
-    </div>
+    <button class="give-up-btn" @click="$emit('give-up')">Desistir</button>
   </div>
 </template>
 
@@ -28,6 +31,8 @@ const props = defineProps({
   maxAttempts: [Number, String],
   difficulty: String
 });
+
+defineEmits(['give-up']);
 
 const difficultyLabel = computed(() => {
   switch (props.difficulty) {
@@ -48,19 +53,25 @@ const attemptsLeftDisplay = computed(() => {
 
 <style scoped>
 .stats-panel {
-  width: 100%;
-  max-width: 420px;
+  width: 220px;
+  min-height: 320px;
   background: rgba(255,255,255,0.18);
-  border-radius: 16px;
+  border-radius: 20px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-  padding: 18px 24px;
-  margin-bottom: 8px;
+  padding: 24px 18px 18px 18px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  justify-content: space-between;
+  align-items: stretch;
   font-size: 1rem;
   color: #2d215a;
   backdrop-filter: blur(4px);
+  gap: 16px;
+}
+.stats-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 .stat-row {
   display: flex;
@@ -74,5 +85,22 @@ const attemptsLeftDisplay = computed(() => {
 .stat-value {
   font-weight: bold;
   letter-spacing: 0.5px;
+}
+.give-up-btn {
+  margin-top: 18px;
+  padding: 12px 0;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(90deg, #b24592 0%, #f15f79 100%);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.08rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s, transform 0.1s;
+}
+.give-up-btn:hover {
+  background: linear-gradient(90deg, #f15f79 0%, #b24592 100%);
+  transform: scale(1.04);
 }
 </style> 

@@ -1,41 +1,38 @@
 <template>
   <div class="game-screen-bg">
-    <div class="game-content">
-      <!-- Genie Placeholder -->
-      <div class="genie-area">
-        <GenieSprite :expression="genieFeedback.expression" />
+    <div class="game-layout-row">
+      <!-- Painel lateral de status -->
+      <div class="stats-panel-wrapper">
+        <GameStatsPanel
+          :currentRange="gameStore.currentRangeDisplay"
+          :attemptsUsed="gameStore.attemptsUsed"
+          :attemptsLeft="gameStore.attemptsLeft"
+          :maxAttempts="maxAttempts"
+          :difficulty="gameStore.difficulty"
+          @give-up="handleGiveUp"
+        />
       </div>
-      <!-- Speech Bubble Placeholder -->
-      <SpeechBubble :message="genieFeedback.message" />
-      <!-- Painel de Status Placeholder -->
-      <GameStatsPanel
-        :currentRange="gameStore.currentRangeDisplay"
-        :attemptsUsed="gameStore.attemptsUsed"
-        :attemptsLeft="gameStore.attemptsLeft"
-        :maxAttempts="maxAttempts"
-        :difficulty="gameStore.difficulty"
-      />
-      <!-- Input de Palpite -->
-      <div class="guess-input-area">
-        <NumberInput
-          label="Seu palpite"
-          placeholder="Digite um número..."
-          v-model="userGuess"
-          :min="gameStore.minRange"
-          :max="gameStore.maxRange"
-        />
-        <div v-if="guessError" style="color:#c0392b; font-size:0.98rem; margin-bottom:4px;">{{ guessError }}</div>
-        <ActionButton
-          label="Enviar Palpite"
-          :disabled="userGuess === null"
-          @click="handleGuess"
-        />
-        <ActionButton
-          label="Desistir"
-          :disabled="false"
-          @click="handleGiveUp"
-          style="background: linear-gradient(90deg, #b24592 0%, #f15f79 100%); margin-top: 2px;"
-        />
+      <!-- Conteúdo principal -->
+      <div class="game-main-content">
+        <SpeechBubble :message="genieFeedback.message" />
+        <div class="genie-area">
+          <GenieSprite :expression="genieFeedback.expression" />
+        </div>
+        <div class="guess-input-area">
+          <NumberInput
+            label="Seu palpite"
+            placeholder="Digite um número..."
+            v-model="userGuess"
+            :min="gameStore.minRange"
+            :max="gameStore.maxRange"
+          />
+          <div v-if="guessError" style="color:#c0392b; font-size:0.98rem; margin-bottom:4px;">{{ guessError }}</div>
+          <ActionButton
+            label="Enviar Palpite"
+            :disabled="userGuess === null"
+            @click="handleGuess"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -88,7 +85,7 @@ function handleGuess() {
 }
 
 function handleGiveUp() {
-  gameStore.endGame(false);
+  gameStore.giveUp();
 }
 </script>
 
@@ -96,68 +93,54 @@ function handleGiveUp() {
 .game-screen-bg {
   min-height: 100vh;
   min-width: 100vw;
-  background: url('@/assets/images/game-screen.png') no-repeat center center fixed;
+  background: url('../assets/images/inside-castle.jpg') no-repeat center center fixed;
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.game-content {
+.game-layout-row {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0;
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 950px;
+  min-height: 520px;
+}
+.stats-panel-wrapper {
+  display: flex;
+  align-items: stretch;
+  /* Painel colado à esquerda, altura igual ao conteúdo principal */
+  background: rgba(255,255,255,0.13);
+  border-radius: 24px 0 0 24px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 0;
+  min-width: 240px;
+  max-width: 260px;
+  min-height: 100%;
+  z-index: 2;
+}
+.game-main-content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 24px;
-  padding: 32px 16px;
   background: rgba(255,255,255,0.08);
-  border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  border-radius: 0 24px 24px 0;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
   backdrop-filter: blur(6px);
+  padding: 32px 24px;
+  min-width: 0;
+  min-height: 520px;
 }
 .genie-area {
   height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.genie-placeholder {
-  width: 100px;
-  height: 100px;
-  background: rgba(200,180,255,0.3);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  color: #6c3fc5;
-  font-size: 1.2rem;
-}
-.speech-bubble-placeholder {
-  min-height: 48px;
-  width: 90%;
-  background: rgba(255,255,255,0.7);
-  border-radius: 16px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #4b2e83;
-  font-size: 1.1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-.status-panel-placeholder {
-  width: 90%;
-  min-height: 40px;
-  background: rgba(255,255,255,0.18);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #333;
-  font-size: 1rem;
-  margin-bottom: 8px;
 }
 .guess-input-area {
   width: 100%;
@@ -166,36 +149,22 @@ function handleGiveUp() {
   align-items: center;
   gap: 12px;
 }
-.guess-input {
-  width: 80%;
-  padding: 10px 14px;
-  border-radius: 8px;
-  border: 1px solid #bbaaff;
-  font-size: 1.1rem;
-  outline: none;
-  margin-bottom: 8px;
-}
-.action-btn {
-  width: 80%;
-  padding: 10px 0;
-  border-radius: 8px;
-  border: none;
-  background: linear-gradient(90deg, #f7b733 0%, #fc4a1a 100%);
-  color: #fff;
-  font-weight: bold;
-  font-size: 1.1rem;
-  cursor: pointer;
-  margin-bottom: 6px;
-  transition: background 0.2s, transform 0.1s;
-}
-.action-btn:hover {
-  background: linear-gradient(90deg, #fc4a1a 0%, #f7b733 100%);
-  transform: scale(1.03);
-}
-.give-up {
-  background: linear-gradient(90deg, #b24592 0%, #f15f79 100%);
-}
-.give-up:hover {
-  background: linear-gradient(90deg, #f15f79 0%, #b24592 100%);
+@media (max-width: 900px) {
+  .game-layout-row {
+    flex-direction: column;
+    align-items: center;
+    max-width: 98vw;
+    min-height: unset;
+  }
+  .stats-panel-wrapper, .game-main-content {
+    border-radius: 24px;
+    min-width: 0;
+    max-width: 98vw;
+    width: 100%;
+  }
+  .stats-panel-wrapper {
+    margin-bottom: 18px;
+    border-radius: 24px;
+  }
 }
 </style> 

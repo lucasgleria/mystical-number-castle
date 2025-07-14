@@ -167,48 +167,48 @@
 
   * **3.1 Core `GameScreen.vue` Structure**
 
-      * [ ] **Create `src/views/GameScreen.vue`:**
+      * [x] **Create `src/views/GameScreen.vue`:**
           * Add basic `<template>`, `<script setup>`, and `<style scoped>` blocks.
-      * [ ] **Integrate `GameScreen` into `App.vue`:**
+      * [x] **Integrate `GameScreen` into `App.vue`:**
           * Use `v-if` to conditionally render `GameScreen` when `gameStore.currentScreen === 'game'`.
 
   * **3.2 Genie & Speech Bubble Components**
 
-      * [ ] **`src/components/GenieSprite.vue`:**
-          * [ ] Props: `expression` (string: `'idle'`, `'thinking'`, `'correct'`, `'tooHigh'`, `'tooLow'`, `'close'`, `'sad'`).
-          * [ ] Load all genie sprite images from `genie-sprites.png` as individual image files (e.g., `genie-idle.png`, `genie-correct.png` - you might need to manually cut them from the sprite sheet or use CSS sprites).
-          * [ ] Use `v-bind:src` or `v-if` to switch the displayed image based on `expression`.
-          * [ ] **GSAP Animation:** Implement subtle `gsap.to` or `gsap.fromTo` animations for `y` position for a gentle idle float.
-          * [ ] **GSAP Animation:** Animate scale or slight rotation when `expression` changes to give it a "pop" effect.
-      * [ ] **`src/components/SpeechBubble.vue`:**
-          * [ ] Props: `message` (string).
-          * [ ] Basic CSS styling for a speech bubble shape.
-          * [ ] **GSAP Animation:** Use `gsap.from` to animate its appearance (e.g., fade in and scale up slightly) when `message` changes or becomes non-empty. Animate out when `message` is empty.
+      * [x] **`src/components/GenieSprite.vue`:**
+          * [x] Props: `expression` (string: `'idle'`, `'thinking'`, `'correct'`, `'tooHigh'`, `'tooLow'`, `'close'`, `'sad'`).
+          * [x] Load all genie sprite images from `genie-sprites.png` as individual image files (e.g., `genie-idle.png`, `genie-correct.png` - you might need to manually cut them from the sprite sheet or use CSS sprites).
+          * [x] Use `v-bind:src` or `v-if` to switch the displayed image based on `expression`.
+          * [x] **GSAP Animation:** Implement subtle `gsap.to` or `gsap.fromTo` animations for `y` position for a gentle idle float.
+          * [x] **GSAP Animation:** Animate scale or slight rotation when `expression` changes to give it a "pop" effect.
+      * [x] **`src/components/SpeechBubble.vue`:**
+          * [x] Props: `message` (string).
+          * [x] Basic CSS styling for a speech bubble shape.
+          * [x] **GSAP Animation:** Use `gsap.from` to animate its appearance (e.g., fade in and scale up slightly) when `message` changes or becomes non-empty. Animate out when `message` is empty.
 
   * **3.3 `GameScreen.vue` Content & Logic**
 
-      * [ ] **Background:** Apply an "inside castle" background style to `GameScreen.vue` (can be a darker version of the `meeting-screen` background, or a new image).
-      * [ ] **"Adventurer's Quest" Panel:**
-          * [ ] Create a dedicated `src/components/GameStatsPanel.vue` component.
-          * [ ] Display `Current Range: {{ gameStore.currentRangeDisplay }}`.
-          * [ ] Display `Attempts Used: {{ gameStore.attemptsUsed }}/{{ gameStore.maxAttempts[gameStore.difficulty] }}`.
-          * [ ] Display `Attempts Left: {{ gameStore.attemptsLeft }}`.
-          * [ ] Apply glassmorphism style.
-      * [ ] **Genie and Speech Bubble Integration:**
-          * [ ] Place `<GenieSprite :expression="genieExpression" />`.
-          * [ ] Place `<SpeechBubble :message="genieMessage" />`.
-          * [ ] Define `genieExpression` and `genieMessage` reactive variables in `GameScreen.vue` to control Genie's state.
-          * [ ] Initialize Genie: `genieExpression = 'idle'`, `genieMessage = "I'm thinking of a number... Can you guess it?"`
-      * [ ] **"Make Your Guess" Section:**
-          * [ ] Use `NumberInput.vue` for the user's guess.
-          * [ ] Create a local reactive variable `userGuess`.
-          * [ ] Use `ActionButton.vue` for "Submit Guess".
-          * [ ] On "Submit Guess" click:
-              * [ ] Call `gameStore.makeGuess(userGuess.value)`.
-              * [ ] Clear `userGuess` input after submission.
-      * [ ] **"Give Up" Button:**
-          * [ ] Use `ActionButton.vue`.
-          * [ ] On `click`, call `gameStore.endGame(false)` (player loses by giving up).
+      * [x] **Background:** Apply an "inside castle" background style to `GameScreen.vue` (can be a darker version of the `meeting-screen` background, or a new image).
+      * [x] **"Adventurer's Quest" Panel:**
+          * [x] Create a dedicated `src/components/GameStatsPanel.vue` component.
+          * [x] Display `Current Range: {{ gameStore.currentRangeDisplay }}`.
+          * [x] Display `Attempts Used: {{ gameStore.attemptsUsed }}/{{ gameStore.maxAttempts[gameStore.difficulty] }}`.
+          * [x] Display `Attempts Left: {{ gameStore.attemptsLeft }}`.
+          * [x] Apply glassmorphism style.
+      * [x] **Genie and Speech Bubble Integration:**
+          * [x] Place `<GenieSprite :expression="genieExpression" />`.
+          * [x] Place `<SpeechBubble :message="genieMessage" />`.
+          * [x] Define `genieExpression` and `genieMessage` reactive variables in `GameScreen.vue` to control Genie's state.
+          * [x] Initialize Genie: `genieExpression = 'idle'`, `genieMessage = "I'm thinking of a number... Can you guess it?"`
+      * [x] **"Make Your Guess" Section:**
+          * [x] Use `NumberInput.vue` for the user's guess.
+          * [x] Create a local reactive variable `userGuess`.
+          * [x] Use `ActionButton.vue` for "Submit Guess".
+          * [x] On "Submit Guess" click:
+              * [x] Call `gameStore.makeGuess(userGuess.value)`.
+              * [x] Clear `userGuess` input after submission.
+      * [x] **"Give Up" Button:**
+          * [x] Use `ActionButton.vue`.
+          * [x] On `click`, call `gameStore.endGame(false)` (player loses by giving up).
 
   * **3.4 Update `gameStore.js` Actions & Getters for Game Screen**
 

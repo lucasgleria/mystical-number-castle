@@ -133,6 +133,9 @@ export const useGameStore = defineStore('game', {
     },
     hideOverlay() {
       this.overlayVisible = false;
+    },
+    giveUp() {
+      this.currentScreen = 'meeting';
     }
   },
   getters: {
@@ -159,46 +162,52 @@ export const useGameStore = defineStore('game', {
     },
 
     genieFeedback: (state) => {
+      // Primeira mensagem ao entrar no jogo
       if (!state.lastGuessFeedback) {
         return {
-          expression: 'idle',
-          message: "Estou pensando em um número... Consegue adivinhar?"
+          expression: 'welcome',
+          message: "Bem-vindo ao desafio! Estou pensando em um número... Consegue adivinhar?"
         };
       }
-      const { type, direction } = state.lastGuessFeedback;
+      const { type, value } = state.lastGuessFeedback;
+      // Range proporcional para definir "far" ou "close"
+      const range = state.maxRange - state.minRange;
+      const diff = Math.abs(value - state.targetNumber);
+      // Definir limites proporcionais
+      const closeThreshold = Math.max(2, Math.round(range * 0.08)); // 8% do range ou mínimo 2
+      const farThreshold = Math.max(8, Math.round(range * 0.25));   // 25% do range ou mínimo 8
       switch (type) {
         case 'correct':
           return {
-            expression: 'correct',
+            expression: 'end',
             message: `Parabéns! Você acertou o número!`
-          };
-        case 'tooHigh':
-          return {
-            expression: 'tooHigh',
-            message: `Muito alto! Tente um número menor.`
-          };
-        case 'tooLow':
-          return {
-            expression: 'tooLow',
-            message: `Muito baixo! Tente um número maior.`
-          };
-        case 'close':
-          return {
-            expression: 'close',
-            message: direction === 'up'
-              ? 'Quase! Um pouco mais alto.'
-              : 'Quase! Um pouco mais baixo.'
           };
         case 'sad':
           return {
-            expression: 'sad',
+            expression: 'end',
             message: `Suas tentativas acabaram! O número era ${state.targetNumber}.`
           };
         default:
-          return {
-            expression: 'idle',
-            message: "Estou pensando em um número... Consegue adivinhar?"
-          };
+          if (diff <= closeThreshold) {
+            return {
+              expression: 'close',
+              message: 'Quase lá! Você está muito próximo.'
+            };
+          } else if (diff >= farThreshold) {
+            return {
+              expression: 'far',
+              message: value > state.targetNumber
+                ? 'Seu palpite está bem acima do número.'
+                : 'Seu palpite está bem abaixo do número.'
+            };
+          } else {
+            return {
+              expression: 'far',
+              message: value > state.targetNumber
+                ? 'Ainda está acima, tente um número menor.'
+                : 'Ainda está abaixo, tente um número maior.'
+            };
+          }
       }
     }
   }

@@ -24,8 +24,6 @@
     
     <!-- EndingScreen será adicionado na Fase 4 -->
     
-    <!-- Debug Panel (temporário) -->
-    <DebugPanel />
   </div>
 </template>
 
@@ -37,7 +35,6 @@ import ParticleSystem from './components/ParticleSystem.vue';
 import AtmosphericEffects from './components/AtmosphericEffects.vue';
 import PerformanceOptimizer from './components/PerformanceOptimizer.vue';
 import GameScreenEntrance from './components/GameScreenEntrance.vue';
-import DebugPanel from './components/DebugPanel.vue';
 import GlobalOverlay from './components/GlobalOverlay.vue';
 
 const gameStore = useGameStore();

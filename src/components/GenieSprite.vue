@@ -1,29 +1,57 @@
 <template>
-  <div ref="genieRef" class="genie-sprite" :class="expression">
-    <!-- O sprite é exibido via background-position -->
+  <div ref="genieRef" class="genie-sprite">
+    <img :src="genieImageSrc" :alt="altText" class="genie-img" />
   </div>
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, computed, onMounted } from 'vue';
 import { gsap } from 'gsap';
+
+import welcomeGenie from '../assets/images/genie-sprites/welcome-genie.png';
+import farGenie from '../assets/images/genie-sprites/far-from-right-guess-genie.png';
+import closeGenie from '../assets/images/genie-sprites/close-from-right-guess-genie.png';
+import endGenie from '../assets/images/genie-sprites/rightend-game-genie.png';
 
 const props = defineProps({
   expression: {
     type: String,
-    default: 'idle',
+    default: 'welcome',
     validator: v => [
-      'idle', 'thinking', 'correct', 'tooHigh', 'tooLow', 'close', 'sad'
+      'welcome', 'far', 'close', 'end'
     ].includes(v)
   }
 });
 
 const genieRef = ref(null);
-let floatTween = null;
+
+const genieImageSrc = computed(() => {
+  switch (props.expression) {
+    case 'welcome':
+      return welcomeGenie;
+    case 'far':
+      return farGenie;
+    case 'close':
+      return closeGenie;
+    case 'end':
+      return endGenie;
+    default:
+      return welcomeGenie;
+  }
+});
+
+const altText = computed(() => {
+  switch (props.expression) {
+    case 'welcome': return 'Gênio dando boas-vindas';
+    case 'far': return 'Gênio indicando palpite distante';
+    case 'close': return 'Gênio indicando palpite próximo';
+    case 'end': return 'Gênio de fim de jogo';
+    default: return 'Gênio';
+  }
+});
 
 onMounted(() => {
-  // Animação de flutuação contínua
-  floatTween = gsap.to(genieRef.value, {
+  gsap.to(genieRef.value, {
     y: 18,
     duration: 2.2,
     repeat: -1,
@@ -33,7 +61,6 @@ onMounted(() => {
 });
 
 watch(() => props.expression, (newVal, oldVal) => {
-  // Efeito "pop" ao trocar de expressão
   if (genieRef.value) {
     gsap.fromTo(
       genieRef.value,
@@ -48,17 +75,15 @@ watch(() => props.expression, (newVal, oldVal) => {
 .genie-sprite {
   width: 120px;
   height: 120px;
-  background-image: url('@/assets/images/genie-sprites.png');
-  background-repeat: no-repeat;
-  background-size: 720px 120px; /* Exemplo: 6 estados lado a lado, ajuste se necessário */
-  transition: background-position 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-/* Mapear expressões para posições do sprite (ajuste conforme layout real do sprite sheet) */
-.genie-sprite.idle      { background-position:   0   0; }
-.genie-sprite.thinking  { background-position: -120px 0; }
-.genie-sprite.correct   { background-position: -240px 0; }
-.genie-sprite.tooHigh   { background-position: -360px 0; }
-.genie-sprite.tooLow    { background-position: -480px 0; }
-.genie-sprite.close     { background-position: -600px 0; }
-.genie-sprite.sad       { background-position: -600px 0; /* Reutiliza último se não houver */ }
+.genie-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
 </style> 
