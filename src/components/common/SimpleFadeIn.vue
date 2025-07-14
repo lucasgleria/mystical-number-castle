@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+// import { ref, onMounted } from 'vue'
 import { gsap } from 'gsap'
 
 export default {
@@ -24,7 +24,6 @@ export default {
     const startFadeIn = () => {
       if (isAnimating.value) return
       
-      console.log('🚀 Iniciando fade-in de 10 segundos...')
       isAnimating.value = true
       
       // Reset da animação
@@ -38,25 +37,11 @@ export default {
         backgroundColor: 'rgba(0, 0, 0, 1)',
         duration: 10,
         ease: 'none',
-        onStart: () => {
-          console.log('✅ Animação iniciada')
-        },
-        onUpdate: function() {
-          const progress = Math.round(this.progress() * 100)
-          console.log(`📊 Progresso: ${progress}%`)
-        },
         onComplete: () => {
-          console.log('🎉 Fade-in completo!')
           isAnimating.value = false
         }
       })
     }
-
-    onMounted(() => {
-      console.log('🎬 Componente SimpleFadeIn montado')
-      console.log('🎯 Elemento fadeOverlay:', fadeOverlay.value)
-    })
-
     return {
       fadeOverlay,
       isAnimating,

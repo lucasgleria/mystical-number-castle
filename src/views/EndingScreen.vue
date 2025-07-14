@@ -59,8 +59,8 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useGameStore } from '../stores/gameStore';
-import LeaderboardTable from '../components/LeaderboardTable.vue';
-import ActionButton from '../components/ActionButton.vue';
+import LeaderboardTable from '../components/leaderboard/LeaderboardTable.vue';
+import ActionButton from '../components/common/ActionButton.vue';
 
 const gameStore = useGameStore();
 

@@ -59,11 +59,11 @@
 </template>
 
 <script setup>
-import GenieSprite from '../components/GenieSprite.vue';
-import SpeechBubble from '../components/SpeechBubble.vue';
-import GameStatsPanel from '../components/GameStatsPanel.vue';
-import NumberInput from '../components/NumberInput.vue';
-import ActionButton from '../components/ActionButton.vue';
+import GenieSprite from '../components/game/GenieSprite.vue';
+import SpeechBubble from '../components/common/SpeechBubble.vue';
+import GameStatsPanel from '../components/game/GameStatsPanel.vue';
+import NumberInput from '../components/game/NumberInput.vue';
+import ActionButton from '../components/common/ActionButton.vue';
 import { useGameStore } from '../stores/gameStore';
 import { computed, ref, onMounted, nextTick } from 'vue';
 import { gsap } from 'gsap';
@@ -109,7 +109,7 @@ function handleGuess() {
 }
 
 function handleGiveUp() {
-  gameStore.giveUp();
+  gameStore.setScreen('meeting');
 }
 
 async function handleEndGame() {

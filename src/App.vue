@@ -37,11 +37,11 @@
 import { useGameStore } from './stores/gameStore';
 import MeetingScreen from './views/MeetingScreen.vue';
 import GameScreen from './views/GameScreen.vue';
-import ParticleSystem from './components/ParticleSystem.vue';
-import AtmosphericEffects from './components/AtmosphericEffects.vue';
-import PerformanceOptimizer from './components/PerformanceOptimizer.vue';
-import GameScreenEntrance from './components/GameScreenEntrance.vue';
-import GlobalOverlay from './components/GlobalOverlay.vue';
+import ParticleSystem from './components/effects/ParticleSystem.vue';
+import AtmosphericEffects from './components/effects/AtmosphericEffects.vue';
+import PerformanceOptimizer from './components/effects/PerformanceOptimizer.vue';
+import GameScreenEntrance from './components/game/GameScreenEntrance.vue';
+import GlobalOverlay from './components/common/GlobalOverlay.vue';
 import EndingScreen from './views/EndingScreen.vue';
 import { onMounted } from 'vue';
 

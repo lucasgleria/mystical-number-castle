@@ -101,10 +101,10 @@
 import { computed, ref, nextTick, watch } from 'vue';
 import { useGameStore } from '../stores/gameStore';
 import { gsap } from 'gsap';
-import TextInput from '../components/TextInput.vue';
-import NumberInput from '../components/NumberInput.vue';
-import ActionButton from '../components/ActionButton.vue';
-import DifficultyButton from '../components/DifficultyButton.vue';
+import TextInput from '../components/common/TextInput.vue';
+import NumberInput from '../components/game/NumberInput.vue';
+import ActionButton from '../components/common/ActionButton.vue';
+import DifficultyButton from '../components/game/DifficultyButton.vue';
 
 const gameStore = useGameStore();
 const fadeOverlay = ref(null);
@@ -152,8 +152,7 @@ const canStartGame = computed(() => {
 // Função para iniciar o fade-in de 10 segundos
 const startFadeIn = () => {
   if (isFading.value) return;
-  
-  console.log('🚀 Iniciando fade-in de 10 segundos no Begin Journey...');
+
   isFading.value = true;
   
   // Reset da animação
@@ -167,15 +166,7 @@ const startFadeIn = () => {
     backgroundColor: 'rgba(0, 0, 0, 1)',
     duration: 10,
     ease: 'none',
-    onStart: () => {
-      console.log('✅ Fade-in iniciado');
-    },
-    onUpdate: function() {
-      const progress = Math.round(this.progress() * 100);
-      console.log(`📊 Progresso do fade-in: ${progress}%`);
-    },
     onComplete: () => {
-      console.log('🎉 Fade-in completo! Redirecionando para GameScreen...');
       isFading.value = false;
       // Após o fade-in completo, ir diretamente para a tela de jogo
       gameStore.setScreen('game');
@@ -184,8 +175,6 @@ const startFadeIn = () => {
       gameStore.attemptsUsed = 0;
       gameStore.gameWon = false;
       // O overlay global permanece ativado para cobrir a transição
-      console.log('🎮 Jogo configurado - número alvo:', gameStore.targetNumber);
-      console.log('🎯 Transição completa - agora na GameScreen');
     }
   });
 };

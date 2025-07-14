@@ -29,7 +29,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { gsap } from 'gsap';
-import { useGameStore } from '../stores/gameStore';
+import { useGameStore } from '../../stores/gameStore';
 
 const gameStore = useGameStore();
 
@@ -43,24 +43,14 @@ const ENTRANCE_DURATION = 2.5; // 2.5 segundos total
 
 // Iniciar animação de entrada
 const startEntrance = () => {
-  console.log('Starting game entrance animation...');
-  
   if (!entranceOverlay.value || !contentContainer.value) {
     console.error('GameScreenEntrance: Elements not found');
     return;
   }
 
-  console.log('GSAP version:', gsap.version);
-  console.log('Elements found:', {
-    overlay: !!entranceOverlay.value,
-    content: !!contentContainer.value,
-    text: !!welcomeText.value
-  });
-
   // Timeline principal
   const tl = gsap.timeline({
     onComplete: () => {
-      console.log('Game entrance animation completed');
       gameStore.completeGameEntrance();
     }
   });
@@ -74,7 +64,6 @@ const startEntrance = () => {
       // Atualizar progresso
       const progress = 75 + (tl.progress() * 25); // 75-100% para entrada
       gameStore.updateTransitionProgress(progress);
-      console.log('Fade-out progress:', progress.toFixed(1) + '%');
     }
   }, 0);
 
@@ -89,9 +78,6 @@ const startEntrance = () => {
     y: 0,
     duration: 2,
     ease: "power2.out",
-    onUpdate: () => {
-      console.log('Content reveal progress:', (tl.progress() * 100).toFixed(1) + '%');
-    }
   }, 0);
 
   // Fase 3: Texto de boas-vindas (1s)
@@ -114,39 +100,23 @@ const startEntrance = () => {
     duration: 0.8,
     ease: "power2.in"
   }, 1.5);
-
-  console.log('Game entrance timeline created');
 };
 
 // Observar mudanças no estado de entrada
-    watch(() => gameStore.isInGameEntrance, (newValue, oldValue) => {
-      console.log('GameScreenEntrance: isInGameEntrance changed:', oldValue, '→', newValue);
-  console.log('GameScreenEntrance: transitionPhase:', gameStore.transitionPhase);
-  
+    watch(() => gameStore.isInGameEntrance, (newValue, oldValue) => {  
   if (newValue && gameStore.transitionPhase === 'game-entrance') {
-    console.log('GameScreenEntrance: Starting game entrance animation...');
     // Pequeno delay para garantir que o DOM está pronto
     setTimeout(() => {
       startEntrance();
     }, 100);
   }
 });
-
-// Observar mudanças na fase de transição
-watch(() => gameStore.transitionPhase, (newValue, oldValue) => {
-  console.log('GameScreenEntrance: transitionPhase changed:', oldValue, '→', newValue);
-});
-
-onMounted(() => {
-  console.log('GameScreenEntrance mounted');
-  console.log('GSAP version:', gsap.version);
-  
+onMounted(() => {  
   // Configurar estado inicial - tela completamente preta
   if (entranceOverlay.value) {
     gsap.set(entranceOverlay.value, {
       backgroundColor: "rgba(0, 0, 0, 1)"
     });
-    console.log('GameScreenEntrance: Overlay configured (black)');
   }
   
   if (contentContainer.value) {
@@ -155,7 +125,6 @@ onMounted(() => {
       scale: 0.95,
       y: 20
     });
-    console.log('GameScreenEntrance: Content container configured (hidden)');
   }
   
   if (welcomeText.value) {
@@ -164,7 +133,6 @@ onMounted(() => {
       y: 30,
       scale: 0.9
     });
-    console.log('GameScreenEntrance: Welcome text configured (hidden)');
   }
   
   // Teste de animação simples
@@ -181,7 +149,6 @@ onMounted(() => {
         });
       }
     });
-    console.log('GameScreenEntrance: Test animation started');
   }
 });
 </script>
