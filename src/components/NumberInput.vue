@@ -24,10 +24,15 @@ defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-const handleInput = (event) => {
-  const value = parseInt(event.target.value);
-  emit('update:modelValue', isNaN(value) ? null : value);
-};
+function onInput(event) {
+  let value = event.target.value;
+  if (value === '' || value === null) {
+    emit('update:modelValue', null);
+    return;
+  }
+  value = Number(value);
+  emit('update:modelValue', value);
+}
 </script>
 
 <style scoped>

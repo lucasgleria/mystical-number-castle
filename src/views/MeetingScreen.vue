@@ -95,7 +95,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, nextTick } from 'vue';
 import { useGameStore } from '../stores/gameStore';
 import { gsap } from 'gsap';
 import TextInput from '../components/TextInput.vue';
@@ -177,19 +177,17 @@ const startFadeIn = () => {
 };
 
 // Função para lidar com o clique do botão
-const handleBeginJourney = () => {
+const handleBeginJourney = async () => {
   if (canStartGame.value && !isFading.value) {
     isFading.value = true;
     gameStore.showOverlay();
-    // Começa o fade-in do overlay global
+    await nextTick();
     gsap.set('.global-overlay', { opacity: 0 });
     gsap.to('.global-overlay', {
       opacity: 1,
       duration: 5,
       onComplete: () => {
-        // Após o fade-in, troca para GameScreen
         gameStore.setScreen('game');
-        // Configurar o jogo
         gameStore.targetNumber = Math.floor(Math.random() * (gameStore.maxRange - gameStore.minRange + 1)) + gameStore.minRange;
         gameStore.attemptsUsed = 0;
         gameStore.gameWon = false;

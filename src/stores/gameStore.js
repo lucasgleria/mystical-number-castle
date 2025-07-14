@@ -18,7 +18,8 @@ export const useGameStore = defineStore('game', {
     isGameEntering: false,
     transitionPhase: 'idle', // 'idle', 'castle-zoom', 'fade-to-black', 'game-entrance'
     animationProgress: 0, // 0-100 para controle de progresso
-    overlayVisible: false // controla visibilidade do overlay preto
+    overlayVisible: false, // controla visibilidade do overlay preto
+    lastGuessFeedback: null, // { type: 'correct'|'tooHigh'|'tooLow'|'close'|'sad', value: number }
   }),
   actions: {
     setScreen(screen) {
@@ -80,11 +81,40 @@ export const useGameStore = defineStore('game', {
     },
     
     makeGuess(guess) {
-      // Placeholder - será implementado na Fase 3
+      if (this.currentScreen !== 'game') return;
+      this.attemptsUsed++;
+      if (this.maxAttempts[this.difficulty] !== Infinity) {
+        this.attemptsLeft--;
+      }
+      if (guess === this.targetNumber) {
+        this.lastGuessFeedback = { type: 'correct', value: guess };
+        this.gameWon = true;
+        this.endGame(true);
+        return;
+      }
+      if (this.attemptsLeft <= 0) {
+        this.lastGuessFeedback = { type: 'sad', value: guess };
+        this.gameWon = false;
+        this.endGame(false);
+        return;
+      }
+      // Feedback: muito alto, muito baixo, próximo
+      const diff = Math.abs(guess - this.targetNumber);
+      if (guess > this.targetNumber) {
+        this.lastGuessFeedback = diff <= 5
+          ? { type: 'close', value: guess, direction: 'down' }
+          : { type: 'tooHigh', value: guess };
+      } else if (guess < this.targetNumber) {
+        this.lastGuessFeedback = diff <= 5
+          ? { type: 'close', value: guess, direction: 'up' }
+          : { type: 'tooLow', value: guess };
+      }
     },
     
     endGame(won) {
-      // Placeholder - será implementado na Fase 3
+      this.gameWon = won;
+      // Futuro: addScoreToLeaderboard, saveLeaderboard
+      this.currentScreen = 'ending';
     },
     
     addScoreToLeaderboard() {
@@ -126,6 +156,50 @@ export const useGameStore = defineStore('game', {
     
     isInGameEntrance: (state) => {
       return state.transitionPhase === 'game-entrance';
+    },
+
+    genieFeedback: (state) => {
+      if (!state.lastGuessFeedback) {
+        return {
+          expression: 'idle',
+          message: "Estou pensando em um número... Consegue adivinhar?"
+        };
+      }
+      const { type, direction } = state.lastGuessFeedback;
+      switch (type) {
+        case 'correct':
+          return {
+            expression: 'correct',
+            message: `Parabéns! Você acertou o número!`
+          };
+        case 'tooHigh':
+          return {
+            expression: 'tooHigh',
+            message: `Muito alto! Tente um número menor.`
+          };
+        case 'tooLow':
+          return {
+            expression: 'tooLow',
+            message: `Muito baixo! Tente um número maior.`
+          };
+        case 'close':
+          return {
+            expression: 'close',
+            message: direction === 'up'
+              ? 'Quase! Um pouco mais alto.'
+              : 'Quase! Um pouco mais baixo.'
+          };
+        case 'sad':
+          return {
+            expression: 'sad',
+            message: `Suas tentativas acabaram! O número era ${state.targetNumber}.`
+          };
+        default:
+          return {
+            expression: 'idle',
+            message: "Estou pensando em um número... Consegue adivinhar?"
+          };
+      }
     }
   }
 });
