@@ -22,7 +22,13 @@
     <!-- Tela de jogo normal (sem animação) -->
     <GameScreen v-if="gameStore.currentScreen === 'game' && !gameStore.isInGameEntrance" />
     
-    <!-- EndingScreen será adicionado na Fase 4 -->
+    <!-- Tela de encerramento com animação de entrada -->
+    <GameScreenEntrance v-if="gameStore.currentScreen === 'ending' && gameStore.isInGameEntrance">
+      <EndingScreen />
+    </GameScreenEntrance>
+    
+    <!-- Tela de encerramento normal (sem animação) -->
+    <EndingScreen v-if="gameStore.currentScreen === 'ending' && !gameStore.isInGameEntrance" />
     
   </div>
 </template>
@@ -36,6 +42,7 @@ import AtmosphericEffects from './components/AtmosphericEffects.vue';
 import PerformanceOptimizer from './components/PerformanceOptimizer.vue';
 import GameScreenEntrance from './components/GameScreenEntrance.vue';
 import GlobalOverlay from './components/GlobalOverlay.vue';
+import EndingScreen from './views/EndingScreen.vue';
 
 const gameStore = useGameStore();
 </script>

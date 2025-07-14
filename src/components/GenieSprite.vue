@@ -11,7 +11,7 @@ import { gsap } from 'gsap';
 import welcomeGenie from '../assets/images/genie-sprites/welcome-genie.png';
 import farGenie from '../assets/images/genie-sprites/far-from-right-guess-genie.png';
 import closeGenie from '../assets/images/genie-sprites/close-from-right-guess-genie.png';
-import endGenie from '../assets/images/genie-sprites/rightend-game-genie.png';
+import endGenie from '../assets/images/genie-sprites/end-game-genie.png';
 
 const props = defineProps({
   expression: {

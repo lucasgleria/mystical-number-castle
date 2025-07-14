@@ -212,10 +212,10 @@
 
   * **3.4 Update `gameStore.js` Actions & Getters for Game Screen**
 
-      * [ ] **`makeGuess(guess)` action:**
-          * [ ] Increment `attemptsUsed`.
-          * [ ] Decrement `attemptsLeft`.
-          * [ ] **Logic:**
+      * [x] **`makeGuess(guess)` action:**
+          * [x] Increment `attemptsUsed`.
+          * [x] Decrement `attemptsLeft`.
+          * [x] **Logic:**
               * If `guess === this.targetNumber`:
                   * Set `gameWon = true`.
                   * Call `this.endGame(true)`.
@@ -225,15 +225,15 @@
               * Else: (Guess is incorrect, game continues)
                   * Determine if `guess` is too high, too low, or "close" (e.g., within 5-10 numbers).
                   * Store this feedback in a temporary state variable (e.g., `lastGuessFeedback`) to be consumed by `GameScreen.vue`.
-      * [ ] **`endGame(won)` action:**
-          * [ ] Sets `this.gameWon = won`.
-          * [ ] Calls `this.addScoreToLeaderboard()` if `won` is true.
-          * [ ] Calls `this.saveLeaderboard()` to persist scores.
-          * [ ] Sets `this.currentScreen = 'ending'`.
-      * [ ] **`addScoreToLeaderboard()` action (Stub - fully implement in Phase 4):** Placeholder for now.
-      * [ ] **`saveLeaderboard()` action (Stub - fully implement in Phase 4):** Placeholder for now.
-      * [ ] **`genieFeedback` getter (or compute in `GameScreen.vue`):** Returns an object `{ expression, message }` based on `lastGuessFeedback`, `gameWon`, `attemptsLeft`, etc.
-      * [ ] **Initial Commit:** Commit Game Screen functionality (excluding full leaderboard save/load).
+      * [x] **`endGame(won)` action:**
+          * [x] Sets `this.gameWon = won`.
+          * [x] Calls `this.addScoreToLeaderboard()` if `won` is true.
+          * [x] Calls `this.saveLeaderboard()` to persist scores.
+          * [x] Sets `this.currentScreen = 'ending'`.
+      * [x] **`addScoreToLeaderboard()` action (Stub - fully implement in Phase 4):** Placeholder for now.
+      * [x] **`saveLeaderboard()` action (Stub - fully implement in Phase 4):** Placeholder for now.
+      * [x] **`genieFeedback` getter (or compute in `GameScreen.vue`):** Returns an object `{ expression, message }` based on `lastGuessFeedback`, `gameWon`, `attemptsLeft`, etc.
+      * [x] **Initial Commit:** Commit Game Screen functionality (excluding full leaderboard save/load).
 
 -----
 

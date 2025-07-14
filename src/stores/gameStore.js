@@ -114,7 +114,6 @@ export const useGameStore = defineStore('game', {
     endGame(won) {
       this.gameWon = won;
       // Futuro: addScoreToLeaderboard, saveLeaderboard
-      this.currentScreen = 'ending';
     },
     
     addScoreToLeaderboard() {

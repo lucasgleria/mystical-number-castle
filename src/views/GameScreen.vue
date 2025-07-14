@@ -18,7 +18,7 @@
         <div class="genie-area">
           <GenieSprite :expression="genieFeedback.expression" />
         </div>
-        <div class="guess-input-area">
+        <div class="guess-input-area" v-if="!isGameOver">
           <NumberInput
             label="Seu palpite"
             placeholder="Digite um número..."
@@ -32,6 +32,9 @@
             :disabled="userGuess === null"
             @click="handleGuess"
           />
+        </div>
+        <div v-else class="end-game-btn-area">
+          <ActionButton label="Encerrar partida" @click="handleEndGame" />
         </div>
       </div>
     </div>
@@ -52,6 +55,10 @@ const gameStore = useGameStore();
 
 const maxAttempts = computed(() => gameStore.maxAttempts[gameStore.difficulty] ?? '-');
 const genieFeedback = computed(() => gameStore.genieFeedback);
+const isGameOver = computed(() => {
+  // O jogo termina quando o feedback é 'correct' ou 'sad' (acerto ou derrota)
+  return gameStore.lastGuessFeedback && ['correct', 'sad'].includes(gameStore.lastGuessFeedback.type);
+});
 
 const userGuess = ref(null);
 const guessError = ref('');
@@ -86,6 +93,29 @@ function handleGuess() {
 
 function handleGiveUp() {
   gameStore.giveUp();
+}
+
+async function handleEndGame() {
+  // Inicia fade-in do overlay preto
+  gameStore.showOverlay();
+  await nextTick();
+  gsap.set('.global-overlay', { opacity: 0 });
+  gsap.to('.global-overlay', {
+    opacity: 1,
+    duration: 1.2,
+    onComplete: () => {
+      // Troca para EndingScreen
+      gameStore.currentScreen = 'ending';
+      // Fade-out do overlay
+      gsap.to('.global-overlay', {
+        opacity: 0,
+        duration: 5,
+        onComplete: () => {
+          gameStore.hideOverlay();
+        }
+      });
+    }
+  });
 }
 </script>
 
@@ -148,6 +178,13 @@ function handleGiveUp() {
   flex-direction: column;
   align-items: center;
   gap: 12px;
+}
+.end-game-btn-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 18px;
 }
 @media (max-width: 900px) {
   .game-layout-row {
