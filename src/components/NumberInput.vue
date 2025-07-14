@@ -7,7 +7,7 @@
       :value="modelValue"
       :min="min"
       :max="max"
-      @input="handleInput"
+      @input="onInput"
       class="number-input"
     />
   </div>
