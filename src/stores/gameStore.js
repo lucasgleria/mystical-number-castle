@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { calculateScore } from '../utils/scoreCalculator.js';
 
 export const useGameStore = defineStore('game', {
   state: () => ({
@@ -113,19 +114,59 @@ export const useGameStore = defineStore('game', {
     
     endGame(won) {
       this.gameWon = won;
-      // Futuro: addScoreToLeaderboard, saveLeaderboard
+      if (won) {
+        this.addScoreToLeaderboard();
+      }
+      this.saveLeaderboard();
+      // Remover: this.setScreen('ending');
     },
     
     addScoreToLeaderboard() {
-      // Placeholder - será implementado na Fase 4
+      // Impede nomes duplicados (case-insensitive)
+      const name = this.playerName.trim();
+      if (!name) return;
+      const nameLower = name.toLowerCase();
+      // Remove entradas antigas com o mesmo nome
+      this.leaderboard = this.leaderboard.filter(entry => entry.name.toLowerCase() !== nameLower);
+      // Calcula score
+      const score = calculateScore(this.attemptsUsed, this.minRange, this.maxRange, this.difficulty);
+      this.leaderboard.push({
+        name,
+        score,
+        attempts: this.attemptsUsed,
+        difficulty: this.difficulty
+      });
+      // Ordena: score desc, tentativas asc
+      this.leaderboard.sort((a, b) => b.score - a.score || a.attempts - b.attempts);
+      // Mantém apenas top 10 por dificuldade
+      const byDiff = { easy: [], medium: [], hard: [] };
+      for (const entry of this.leaderboard) {
+        if (byDiff[entry.difficulty].length < 10) {
+          byDiff[entry.difficulty].push(entry);
+        }
+      }
+      // Junta todos para o leaderboard geral (All)
+      this.leaderboard = [...byDiff.easy, ...byDiff.medium, ...byDiff.hard];
+      // Top 10 geral (All) será filtrado na tela
     },
     
     saveLeaderboard() {
-      // Placeholder - será implementado na Fase 4
+      try {
+        localStorage.setItem('mysticalNumberCastleLeaderboard', JSON.stringify(this.leaderboard));
+      } catch (e) {
+        // Fallback: não salva
+      }
     },
     
     loadLeaderboard() {
-      // Placeholder - será implementado na Fase 4
+      try {
+        const stored = localStorage.getItem('mysticalNumberCastleLeaderboard');
+        if (stored) {
+          this.leaderboard = JSON.parse(stored);
+        }
+      } catch (e) {
+        this.leaderboard = [];
+      }
     },
     showOverlay() {
       this.overlayVisible = true;

@@ -43,8 +43,13 @@ import PerformanceOptimizer from './components/PerformanceOptimizer.vue';
 import GameScreenEntrance from './components/GameScreenEntrance.vue';
 import GlobalOverlay from './components/GlobalOverlay.vue';
 import EndingScreen from './views/EndingScreen.vue';
+import { onMounted } from 'vue';
 
 const gameStore = useGameStore();
+
+onMounted(() => {
+  gameStore.loadLeaderboard();
+});
 </script>
 
 <style>

@@ -83,6 +83,9 @@
             class="begin-journey-btn"
           />
         </div>
+        <div v-if="duplicateNameError" class="error-message">
+          {{ duplicateNameError }}
+        </div>
       </div>
 
       <!-- Imagem à direita -->
@@ -95,7 +98,7 @@
 </template>
 
 <script setup>
-import { computed, ref, nextTick } from 'vue';
+import { computed, ref, nextTick, watch } from 'vue';
 import { useGameStore } from '../stores/gameStore';
 import { gsap } from 'gsap';
 import TextInput from '../components/TextInput.vue';
@@ -106,6 +109,7 @@ import DifficultyButton from '../components/DifficultyButton.vue';
 const gameStore = useGameStore();
 const fadeOverlay = ref(null);
 const isFading = ref(false);
+const duplicateNameError = ref('');
 
 const difficulties = [
   {
@@ -129,10 +133,20 @@ const isRangeValid = computed(() => {
   return gameStore.minRange < gameStore.maxRange;
 });
 
+const isNameDuplicate = computed(() => {
+  const name = gameStore.playerName.trim().toLowerCase();
+  return !!gameStore.leaderboard.find(entry => entry.name.toLowerCase() === name);
+});
+
+watch(() => gameStore.playerName, () => {
+  duplicateNameError.value = '';
+});
+
 const canStartGame = computed(() => {
   return gameStore.playerName.trim() !== '' && 
          isRangeValid.value && 
-         gameStore.difficulty !== null;
+         gameStore.difficulty !== null &&
+         !isNameDuplicate.value;
 });
 
 // Função para iniciar o fade-in de 10 segundos
@@ -178,6 +192,10 @@ const startFadeIn = () => {
 
 // Função para lidar com o clique do botão
 const handleBeginJourney = async () => {
+  if (isNameDuplicate.value) {
+    duplicateNameError.value = 'Este nome já está no leaderboard. Escolha outro nome.';
+    return;
+  }
   if (canStartGame.value && !isFading.value) {
     isFading.value = true;
     gameStore.showOverlay();
