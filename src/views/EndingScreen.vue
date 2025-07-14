@@ -92,28 +92,4 @@ function handlePlayAgain() {
   gameStore.setDifficulty(null);
   gameStore.setScreen('meeting');
 }
-</script>
-
-<style lang="scss">
-@import '../assets/styles/_ending-screen.scss';
-.result-icon {
-  font-size: 2.5rem;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-.motivational-message {
-  margin-top: 0.7rem;
-  font-size: 1.1rem;
-  color: $accent-gold;
-  text-shadow: 0 0 8px rgba(255,255,255,0.5);
-  font-weight: 600;
-}
-.play-again-btn {
-  margin-top: 1.2rem;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5em;
-}
-</style> 
+</script> 

@@ -1,42 +1,59 @@
 <template>
   <div class="game-screen-bg">
-    <div class="game-layout-row">
+    <div class="game-screen-container">
       <!-- Painel lateral de status -->
-      <div class="stats-panel-wrapper">
-        <GameStatsPanel
-          :currentRange="gameStore.currentRangeDisplay"
-          :attemptsUsed="gameStore.attemptsUsed"
-          :attemptsLeft="gameStore.attemptsLeft"
-          :maxAttempts="maxAttempts"
-          :difficulty="gameStore.difficulty"
-          @give-up="handleGiveUp"
-        />
-      </div>
-      <!-- Conteúdo principal -->
-      <div class="game-main-content">
-        <SpeechBubble :message="genieFeedback.message" />
-        <div class="genie-area">
-          <GenieSprite :expression="genieFeedback.expression" />
+      <aside class="status-panel">
+        <div class="status-title">Adventurer's Quest</div>
+        <div class="status-info">
+          <div class="status-row">
+            <span class="status-label">Current Range</span>
+            <span class="status-value">{{ gameStore.minRange }} - {{ gameStore.maxRange }}</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">Attempts</span>
+            <span class="status-value">{{ gameStore.attemptsUsed }} / {{ maxAttempts }}</span>
+          </div>
+          <div class="status-row attempts-left">
+            <span>{{ gameStore.attemptsLeft }} left</span>
+          </div>
         </div>
-        <div class="guess-input-area" v-if="!isGameOver">
-          <NumberInput
-            label="Seu palpite"
-            placeholder="Digite um número..."
-            v-model="userGuess"
-            :min="gameStore.minRange"
-            :max="gameStore.maxRange"
-          />
-          <div v-if="guessError" style="color:#c0392b; font-size:0.98rem; margin-bottom:4px;">{{ guessError }}</div>
-          <ActionButton
-            label="Enviar Palpite"
-            :disabled="userGuess === null"
-            @click="handleGuess"
-          />
+        <div class="status-row attempts-used">Attempts Used {{ gameStore.attemptsUsed }}/{{ maxAttempts }}</div>
+        <ActionButton label="Give Up" @click="handleGiveUp" class="give-up-btn" />
+      </aside>
+      <!-- Área principal -->
+      <main class="main-panel">
+        <div class="character-area">
+          <div class="character-box">
+            <SpeechBubble :message="genieFeedback.message" />
+            <div class="genie-wrapper">
+              <GenieSprite :expression="genieFeedback.expression" />
+            </div>
+          </div>
         </div>
-        <div v-else class="end-game-btn-area">
-          <ActionButton label="Encerrar partida" @click="handleEndGame" />
+        <div class="guess-section">
+          <div class="guess-title">Make Your Guess</div>
+          <div class="guess-subtitle">Enter a number between {{ gameStore.minRange }} and {{ gameStore.maxRange }}</div>
+          <div class="guess-input-area section" v-if="!isGameOver">
+            <NumberInput
+              label="Your guess"
+              placeholder="Enter your guess..."
+              v-model="userGuess"
+              :min="gameStore.minRange"
+              :max="gameStore.maxRange"
+            />
+            <div v-if="guessError" class="error-message">{{ guessError }}</div>
+            <ActionButton
+              label="Submit Guess"
+              :disabled="userGuess === null"
+              @click="handleGuess"
+              class="main-action-btn submit-guess-btn"
+            />
+          </div>
+          <div v-else class="end-game-btn-area section">
+            <ActionButton label="End Game" @click="handleEndGame" class="main-action-btn submit-guess-btn" />
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   </div>
 </template>
@@ -117,91 +134,4 @@ async function handleEndGame() {
     }
   });
 }
-</script>
-
-<style scoped>
-.game-screen-bg {
-  min-height: 100vh;
-  min-width: 100vw;
-  background: url('../assets/images/inside-castle.jpg') no-repeat center center fixed;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.game-layout-row {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: center;
-  gap: 0;
-  width: 100%;
-  max-width: 950px;
-  min-height: 520px;
-}
-.stats-panel-wrapper {
-  display: flex;
-  align-items: stretch;
-  /* Painel colado à esquerda, altura igual ao conteúdo principal */
-  background: rgba(255,255,255,0.13);
-  border-radius: 24px 0 0 24px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-  padding: 0;
-  min-width: 240px;
-  max-width: 260px;
-  min-height: 100%;
-  z-index: 2;
-}
-.game-main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 0 24px 24px 0;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-  backdrop-filter: blur(6px);
-  padding: 32px 24px;
-  min-width: 0;
-  min-height: 520px;
-}
-.genie-area {
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.guess-input-area {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-.end-game-btn-area {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 18px;
-}
-@media (max-width: 900px) {
-  .game-layout-row {
-    flex-direction: column;
-    align-items: center;
-    max-width: 98vw;
-    min-height: unset;
-  }
-  .stats-panel-wrapper, .game-main-content {
-    border-radius: 24px;
-    min-width: 0;
-    max-width: 98vw;
-    width: 100%;
-  }
-  .stats-panel-wrapper {
-    margin-bottom: 18px;
-    border-radius: 24px;
-  }
-}
-</style> 
+</script> 
