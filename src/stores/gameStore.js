@@ -182,32 +182,32 @@ export const useGameStore = defineStore('game', {
         case 'correct':
           return {
             expression: 'end',
-            message: `Parabéns! Você acertou o número!`
+            message: `Congratulaations! You won!`
           };
         case 'sad':
           return {
             expression: 'end',
-            message: `Suas tentativas acabaram! O número era ${state.targetNumber}.`
+            message: `Your guesses have ended! The number was ${state.targetNumber}.`
           };
         default:
           if (diff <= closeThreshold) {
             return {
               expression: 'close',
-              message: 'Quase lá! Você está muito próximo.'
+              message: 'Almost there! You are really close.'
             };
           } else if (diff >= farThreshold) {
             return {
               expression: 'far',
               message: value > state.targetNumber
-                ? 'Seu palpite está bem acima do número.'
-                : 'Seu palpite está bem abaixo do número.'
+                ? 'Your guess is really above it.'
+                : 'Your guess is really down it.'
             };
           } else {
             return {
               expression: 'far',
               message: value > state.targetNumber
-                ? 'Ainda está acima, tente um número menor.'
-                : 'Ainda está abaixo, tente um número maior.'
+                ? 'Still above, try a lower number.'
+                : 'Still below, try a higher number.'
             };
           }
       }

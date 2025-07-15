@@ -57,9 +57,10 @@ onMounted(() => {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
-  overflow: hidden;
+  /* Removido overflow: hidden e height: 100vh para permitir scroll */
+  overflow-x: hidden;
 }
 
 * {
@@ -71,20 +72,20 @@ onMounted(() => {
 body {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  /* Removido overflow: hidden e height: 100vh para permitir scroll */
+  overflow-x: hidden;
 }
 
-/* Desktop: sem scroll */
+/* Desktop: permite scroll */
 @media (min-width: 769px) {
   #app {
-    overflow: hidden;
-    height: 100vh;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
-  
   body {
-    overflow: hidden;
-    height: 100vh;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 }
 
@@ -95,7 +96,6 @@ body {
     height: auto;
     min-height: 100vh;
   }
-  
   body {
     overflow: auto;
     height: auto;
@@ -110,7 +110,6 @@ body {
     height: auto;
     min-height: 100vh;
   }
-  
   body {
     overflow: auto;
     height: auto;
@@ -125,7 +124,6 @@ body {
     height: auto;
     min-height: 100vh;
   }
-  
   body {
     overflow: auto;
     height: auto;

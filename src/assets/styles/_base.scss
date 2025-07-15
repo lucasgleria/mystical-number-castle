@@ -53,7 +53,6 @@ body {
   min-height: 100vh;
   min-width: 100vw;
   width: 100%;
-  height: 100%;
   font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
   background: linear-gradient(135deg, $background-gradient-start 0%, $background-gradient-end 100%);
   color: $text-white;
@@ -61,11 +60,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden; // Previne scroll horizontal
   touch-action: manipulation; // Otimiza para touch
-  
-  // Desktop: sem scroll, altura fixa
-  overflow-y: hidden;
-  height: 100vh;
-  
+  // Removido overflow-y: hidden e height: 100vh para permitir scroll em desktop
+
   // Mobile: permite scroll
   @media (max-width: 768px) {
     overflow-y: auto;
