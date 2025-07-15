@@ -107,7 +107,7 @@ export const useGameStore = defineStore('game', {
       // Remove entradas antigas com o mesmo nome
       this.leaderboard = this.leaderboard.filter(entry => entry.name.toLowerCase() !== nameLower);
       // Calcula score
-      const score = calculateScore(this.attemptsUsed, this.minRange, this.maxRange, this.difficulty);
+      const score = calculateScore(this.attemptsUsed, this.minRange, this.maxRange, this.difficulty, this.maxAttempts);
       this.leaderboard.push({
         name,
         score,

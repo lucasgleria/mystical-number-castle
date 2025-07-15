@@ -79,10 +79,14 @@ const currentLeaderboardFilter = ref('all');
 
 const filteredLeaderboard = computed(() => {
   if (currentLeaderboardFilter.value === 'all') {
-    return gameStore.leaderboard.slice(0, 10);
+    // Ordena todos por score desc, tentativas asc, pega os 10 melhores
+    return [...gameStore.leaderboard]
+      .sort((a, b) => b.score - a.score || a.attempts - b.attempts)
+      .slice(0, 10);
   }
   return gameStore.leaderboard
     .filter(entry => entry.difficulty === currentLeaderboardFilter.value)
+    .sort((a, b) => b.score - a.score || a.attempts - b.attempts)
     .slice(0, 10);
 });
 
