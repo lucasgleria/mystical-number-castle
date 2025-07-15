@@ -75,6 +75,62 @@ body {
   overflow: hidden;
 }
 
+/* Desktop: sem scroll */
+@media (min-width: 769px) {
+  #app {
+    overflow: hidden;
+    height: 100vh;
+  }
+  
+  body {
+    overflow: hidden;
+    height: 100vh;
+  }
+}
 
+/* Mobile: permite scroll */
+@media (max-width: 768px) {
+  #app {
+    overflow: auto;
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  body {
+    overflow: auto;
+    height: auto;
+    min-height: 100vh;
+  }
+}
+
+/* Telas muito pequenas */
+@media (max-width: 480px) {
+  #app {
+    overflow: auto;
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  body {
+    overflow: auto;
+    height: auto;
+    min-height: 100vh;
+  }
+}
+
+/* Orientação landscape em mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  #app {
+    overflow: auto;
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  body {
+    overflow: auto;
+    height: auto;
+    min-height: 100vh;
+  }
+}
 </style>
 

@@ -8,6 +8,13 @@ $text-white: #FFFFFF;
 $glass-bg: rgba(255, 255, 255, 0.1);
 $glass-border: rgba(255, 255, 255, 0.2);
 
+// Breakpoints para responsividade
+$breakpoint-xs: 480px;
+$breakpoint-sm: 768px;
+$breakpoint-md: 1024px;
+$breakpoint-lg: 1200px;
+$breakpoint-xl: 1400px;
+
 // Espaçamentos
 $spacing-xs: 4px;
 $spacing-sm: 8px;
@@ -15,7 +22,7 @@ $spacing-md: 16px;
 $spacing-lg: 32px;
 $spacing-xl: 64px;
 
-// Tamanhos de fonte
+// Tamanhos de fonte responsivos
 $font-size-xs: 0.75rem;   // 12px
 $font-size-sm: 0.875rem;  // 14px
 $font-size-md: 1rem;      // 16px
@@ -23,8 +30,26 @@ $font-size-lg: 1.5rem;    // 24px
 $font-size-xl: 2.25rem;   // 36px
 $font-size-title: 3rem;   // 48px
 
+// Tamanhos de fonte mobile
+$font-size-xs-mobile: 0.7rem;   // 11px
+$font-size-sm-mobile: 0.8rem;   // 13px
+$font-size-md-mobile: 0.9rem;   // 14px
+$font-size-lg-mobile: 1.2rem;   // 19px
+$font-size-xl-mobile: 1.8rem;   // 29px
+$font-size-title-mobile: 2.2rem; // 35px
+
 // Bordas arredondadas
 $radius-sm: 6px;
 $radius-md: 12px;
 $radius-lg: 24px;
 $radius-pill: 999px;
+
+// Z-index layers
+$z-index-base: 1;
+$z-index-overlay: 10;
+$z-index-modal: 100;
+$z-index-tooltip: 1000;
+
+// Touch targets (para mobile)
+$touch-target-min: 44px;
+$touch-target-ideal: 48px;

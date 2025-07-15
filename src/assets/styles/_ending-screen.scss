@@ -1,12 +1,18 @@
-@import './_variables.scss';
-
 .ending-screen {
   min-height: 100vh;
-  background: $primary-purple;
+  background: #0A0A23;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: $spacing-lg;
+  padding: 32px;
+  overflow-x: hidden;
+  
+  // Mobile: permite scroll e ajusta altura
+  @media (max-width: 768px) {
+    min-height: auto;
+    height: auto;
+    padding: 16px 8px;
+  }
 }
 
 .title-section {
@@ -16,20 +22,22 @@
 }
 
 .main-title {
-  font-size: $font-size-title;
+  font-size: 3rem;
   font-weight: 700;
-  color: $accent-gold;
+  color: #FFFFFF;
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
   margin-bottom: 0.5rem;
   letter-spacing: 3px;
+  line-height: 1.2;
 }
 
 .subtitle {
-  font-size: $font-size-lg;
-  color: $text-white;
+  font-size: 1.5rem;
+  color: #FFFFFF;
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
   font-weight: 400;
   letter-spacing: 2px;
+  line-height: 1.3;
 }
 
 .main-container {
@@ -43,14 +51,14 @@
   flex: 1;
   background: rgba(60, 60, 136, 0.2);
   backdrop-filter: blur(15px);
-  border-radius: $radius-lg;
-  padding: $spacing-lg;
+  border-radius: 24px;
+  padding: 32px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $spacing-lg;
+  gap: 32px;
   max-width: 800px;
 }
 
@@ -61,8 +69,10 @@
   background: rgba(255,255,255,0.08);
   margin-bottom: 1em;
   text-align: center;
-  color: $accent-gold;
-  border: 2px solid $accent-gold;
+  color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+  line-height: 1.4;
+  
   &.lose {
     color: #ff6b6b;
     border-color: #ff6b6b;
@@ -73,15 +83,16 @@
   width: 100%;
   margin-bottom: 1em;
   background: rgba(60, 60, 136, 0.15);
-  border-radius: $radius-md;
-  padding: $spacing-md;
+  border-radius: 12px;
+  padding: 16px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.2);
 }
 
 .leaderboard-section h3 {
   text-align: center;
   margin-bottom: 0.5em;
-  color: $accent-gold;
+  color: #FFFFFF;
+  font-size: 1.5rem;
 }
 
 .leaderboard-tabs {
@@ -89,36 +100,42 @@
   justify-content: center;
   gap: 0.5em;
   margin-bottom: 0.5em;
+  flex-wrap: wrap;
 }
 
 .leaderboard-tabs button {
   background: none;
   border: none;
-  color: $accent-gold;
+  color: #FFFFFF;
   font-weight: bold;
   padding: 0.3em 1em;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s;
+  min-height: 44px;
+  
   &:hover, &.active {
-    background: $accent-gold;
+    background: #FFFFFF;
     color: #222;
   }
 }
 
-// Estilos específicos de elementos do EndingScreen.vue
+/* Estilos específicos de elementos do EndingScreen.vue */
 .result-icon {
   font-size: 2.5rem;
   display: block;
   margin-bottom: 0.5rem;
 }
+
 .motivational-message {
   margin-top: 0.7rem;
   font-size: 1.1rem;
-  color: $accent-gold;
+  color: #FFFFFF;
   text-shadow: 0 0 8px rgba(255,255,255,0.5);
   font-weight: 600;
+  text-align: center;
 }
+
 .play-again-btn {
   margin-top: 1.2rem;
   font-size: 1.2rem;
@@ -126,26 +143,222 @@
   align-items: center;
   justify-content: center;
   gap: 0.5em;
+  min-height: 48px;
 }
 
+/* Responsividade - Tablet */
 @media (max-width: 1024px) {
+  .ending-screen {
+    padding: 16px;
+  }
+  
   .main-container {
     flex-direction: column;
-    gap: $spacing-lg;
+    gap: 32px;
+  }
+  
+  .ending-panel {
+    padding: 16px;
+    max-width: 100%;
+  }
+  
+  .main-title {
+    font-size: 2.8rem;
+  }
+  
+  .subtitle {
+    font-size: 1.4rem;
   }
 }
 
+/* Responsividade - Mobile Grande */
 @media (max-width: 768px) {
   .ending-screen {
-    padding: $spacing-md;
+    padding: 8px;
+    min-height: 100vh;
+    height: auto;
   }
+  
+  .title-section {
+    margin-bottom: 2rem;
+  }
+  
   .main-title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+    letter-spacing: 2px;
   }
+  
   .subtitle {
     font-size: 1.2rem;
+    letter-spacing: 1px;
   }
+  
   .ending-panel {
-    padding: 1.5rem;
+    padding: 16px;
+    border-radius: 12px;
+    gap: 16px;
+  }
+  
+  .ending-result {
+    font-size: 1rem;
+    padding: 0.8em 1.2em;
+    margin-bottom: 0.8em;
+  }
+  
+  .leaderboard-section {
+    padding: 8px;
+  }
+  
+  .leaderboard-section h3 {
+    font-size: 1.2rem;
+  }
+  
+  .leaderboard-tabs {
+    gap: 0.3em;
+  }
+  
+  .leaderboard-tabs button {
+    padding: 0.4em 0.8em;
+    font-size: 0.9rem;
+    min-height: 48px;
+  }
+  
+  .result-icon {
+    font-size: 2rem;
+  }
+  
+  .motivational-message {
+    font-size: 1rem;
+  }
+  
+  .play-again-btn {
+    font-size: 1.1rem;
+    padding: 1.2rem 2rem;
+    min-height: 48px;
+  }
+}
+
+/* Responsividade - Mobile Pequeno */
+@media (max-width: 480px) {
+  .ending-screen {
+    padding: 4px;
+  }
+  
+  .main-title {
+    font-size: 2rem;
+    letter-spacing: 1px;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .ending-panel {
+    padding: 8px;
+    gap: 8px;
+  }
+  
+  .ending-result {
+    font-size: 0.9rem;
+    padding: 0.7em 1em;
+  }
+  
+  .leaderboard-section {
+    padding: 4px;
+  }
+  
+  .leaderboard-section h3 {
+    font-size: 1.1rem;
+  }
+  
+  .leaderboard-tabs button {
+    padding: 0.3em 0.6em;
+    font-size: 0.8rem;
+  }
+  
+  .result-icon {
+    font-size: 1.8rem;
+  }
+  
+  .motivational-message {
+    font-size: 0.9rem;
+  }
+  
+  .play-again-btn {
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+  }
+}
+
+/* Orientação Landscape em Mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .ending-screen {
+    padding: 4px;
+    min-height: auto;
+    height: auto;
+  }
+  
+  .title-section {
+    margin-bottom: 1rem;
+  }
+  
+  .main-title {
+    font-size: 1.8rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .ending-panel {
+    padding: 8px;
+    gap: 8px;
+  }
+  
+  .ending-result {
+    font-size: 0.9rem;
+    padding: 0.6em 1em;
+    margin-bottom: 0.6em;
+  }
+  
+  .leaderboard-section {
+    padding: 4px;
+  }
+  
+  .play-again-btn {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
+}
+
+/* Melhorias para touch em mobile */
+@media (max-width: 768px) {
+  .play-again-btn,
+  .leaderboard-tabs button {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  /* Melhora espaçamento para touch */
+  .ending-panel {
+    gap: 32px;
+  }
+  
+  .leaderboard-tabs {
+    gap: 8px;
+  }
+  
+  .leaderboard-tabs button {
+    min-height: 48px;
+  }
+}
+
+/* Previne scroll horizontal */
+@media (max-width: 768px) {
+  .ending-screen,
+  .main-container,
+  .ending-panel {
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 } 

@@ -1,0 +1,231 @@
+// Otimizações específicas para dispositivos móveis
+
+// Previne scroll horizontal em todos os dispositivos
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+// Melhorias para dispositivos com notch
+@supports (padding: max(0px)) {
+  .meeting-screen,
+  .game-screen-bg,
+  .ending-screen {
+    padding-left: max($spacing-lg, env(safe-area-inset-left));
+    padding-right: max($spacing-lg, env(safe-area-inset-right));
+    padding-top: max($spacing-lg, env(safe-area-inset-top));
+    padding-bottom: max($spacing-lg, env(safe-area-inset-bottom));
+  }
+}
+
+// Otimizações para telas muito pequenas
+@media (max-width: 360px) {
+  html {
+    font-size: 12px;
+  }
+  
+  .main-title {
+    font-size: 1.8rem !important;
+  }
+  
+  .subtitle {
+    font-size: 1rem !important;
+  }
+  
+  .action-button,
+  .difficulty-button {
+    padding: 0.7rem 1rem !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .text-input,
+  .number-input {
+    padding: 0.7rem 0.8rem !important;
+    font-size: 16px !important;
+  }
+}
+
+// Otimizações para orientação landscape em mobile
+@media (max-width: $breakpoint-sm) and (orientation: landscape) {
+  .meeting-screen,
+  .game-screen-bg,
+  .ending-screen {
+    min-height: auto;
+    height: auto;
+    padding: $spacing-xs;
+  }
+  
+  .title-section {
+    margin-bottom: 1rem;
+  }
+  
+  .main-title {
+    font-size: 1.6rem !important;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem !important;
+  }
+  
+  .form-container,
+  .ending-panel {
+    padding: $spacing-sm;
+  }
+  
+  .game-screen-container {
+    margin: 8px 0;
+    gap: 12px;
+  }
+  
+  .main-panel,
+  .status-panel {
+    padding: 12px 3vw;
+  }
+}
+
+// Melhorias para dispositivos com tela de alta densidade
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .action-button,
+  .difficulty-button,
+  .text-input,
+  .number-input {
+    border-width: 1px;
+  }
+}
+
+// Otimizações para dispositivos com tela OLED
+@media (prefers-color-scheme: dark) {
+  .action-button:hover,
+  .difficulty-button:hover {
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+  }
+}
+
+// Melhorias para dispositivos com tela de baixa resolução
+@media (max-width: $breakpoint-sm) and (max-resolution: 150dpi) {
+  .text-input,
+  .number-input {
+    font-size: 18px; // Aumenta para melhor legibilidade
+  }
+  
+  .action-button,
+  .difficulty-button {
+    font-size: 18px;
+  }
+}
+
+// Otimizações para dispositivos com tela de alta resolução
+@media (min-resolution: 300dpi) {
+  .text-input,
+  .number-input,
+  .action-button,
+  .difficulty-button {
+    font-size: 14px; // Reduz para melhor proporção
+  }
+}
+
+// Melhorias para dispositivos com tela de baixa luminosidade
+@media (prefers-reduced-motion: reduce) {
+  .action-button,
+  .difficulty-button,
+  .text-input,
+  .number-input {
+    transition: none;
+  }
+  
+  .action-button:hover,
+  .difficulty-button:hover {
+    transform: none;
+  }
+}
+
+// Otimizações para dispositivos com tela de alta luminosidade
+@media (prefers-contrast: high) {
+  .text-input,
+  .number-input {
+    border-width: 3px;
+    border-color: #FFFFFF;
+  }
+  
+  .action-button,
+  .difficulty-button {
+    border-width: 3px;
+  }
+}
+
+// Melhorias para dispositivos com tela de baixo contraste
+@media (prefers-contrast: low) {
+  .text-input,
+  .number-input {
+    background: rgba(60, 60, 136, 0.4);
+  }
+  
+  .action-button,
+  .difficulty-button {
+    background: rgba(60, 60, 136, 0.6);
+  }
+}
+
+// Otimizações para dispositivos com tela de alta saturação
+@media (prefers-color-scheme: light) {
+  .text-input,
+  .number-input {
+    background: rgba(60, 60, 136, 0.3);
+  }
+}
+
+// Melhorias para dispositivos com tela de baixa saturação
+@media (prefers-reduced-data: reduce) {
+  .atmospheric-effects,
+  .particle-system {
+    display: none;
+  }
+}
+
+// Otimizações para dispositivos com tela de alta performance
+@media (prefers-reduced-motion: no-preference) {
+  .action-button:hover,
+  .difficulty-button:hover {
+    transition: all 0.2s ease;
+  }
+}
+
+// Melhorias para dispositivos com tela de baixa performance
+@media (max-width: $breakpoint-sm) and (max-device-width: 480px) {
+  .atmospheric-effects {
+    opacity: 0.5;
+  }
+  
+  .particle-system {
+    opacity: 0.3;
+  }
+}
+
+// Otimizações para dispositivos com tela de alta performance
+@media (min-width: $breakpoint-lg) {
+  .action-button:hover,
+  .difficulty-button:hover {
+    transition: all 0.3s ease;
+  }
+}
+
+// Melhorias para dispositivos com tela de baixa performance
+@media (max-width: $breakpoint-sm) and (max-device-width: 480px) {
+  .action-button,
+  .difficulty-button {
+    transition: none;
+  }
+  
+  .action-button:active,
+  .difficulty-button:active {
+    transform: scale(0.95);
+  }
+}
+
+// Otimizações para dispositivos com tela de alta performance
+@media (min-width: $breakpoint-lg) {
+  .action-button:active,
+  .difficulty-button:active {
+    transform: scale(0.98);
+  }
+} 

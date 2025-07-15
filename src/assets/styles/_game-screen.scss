@@ -1,5 +1,5 @@
-// Estilos específicos do GameScreen
-// Mantém o background e ajustes exclusivos desta tela
+/* Estilos específicos do GameScreen */
+/* Mantém o background e ajustes exclusivos desta tela */
 
 .game-screen-bg {
   /* Background exclusivo do GameScreen */
@@ -10,9 +10,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-x: hidden;
+  
+  // Mobile: permite scroll e ajusta altura
+  @media (max-width: 768px) {
+    min-height: auto;
+    height: auto;
+    padding: 16px 8px;
+  }
 }
 
-// Container central da tela do jogo
+/* Container central da tela do jogo */
 .game-screen-container {
   display: flex;
   flex-direction: row;
@@ -26,7 +34,7 @@
   margin: 48px 0;
 }
 
-// Painel lateral de status
+/* Painel lateral de status */
 .status-panel {
   flex: 0 0 240px;
   background: rgba(40, 20, 80, 0.45);
@@ -39,6 +47,7 @@
   gap: 18px;
   color: #fff;
 }
+
 .status-title {
   font-size: 1.25rem;
   font-weight: 700;
@@ -47,36 +56,43 @@
   text-align: left;
   letter-spacing: 1px;
 }
+
 .status-info {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+
 .status-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 1rem;
 }
+
 .status-label {
   color: #fff;
   font-weight: 600;
 }
+
 .status-value {
   color: #fff;
   font-weight: 500;
 }
+
 .attempts-left span {
   color: #fff;
   font-weight: 700;
   font-size: 1.1rem;
 }
+
 .attempts-used {
   color: #fff;
   font-size: 0.98rem;
   margin-top: 8px;
   text-align: left;
 }
+
 .give-up-btn {
   margin-top: 18px;
   background: linear-gradient(90deg, #7b4397 0%, #dc2430 100%);
@@ -86,9 +102,10 @@
   font-size: 1.08rem;
   padding: 0.7rem 0;
   letter-spacing: 1px;
+  min-height: 48px;
 }
 
-// Painel principal
+/* Painel principal */
 .main-panel {
   flex: 1;
   background: rgba(255,255,255,0.10);
@@ -101,13 +118,14 @@
   gap: 32px;
 }
 
-// Área do personagem
+/* Área do personagem */
 .character-area {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 18px;
 }
+
 .character-box {
   background: #231942;
   border-radius: 18px;
@@ -120,13 +138,14 @@
   align-items: center;
   position: relative;
 }
+
 .genie-wrapper {
   margin-top: 18px;
   display: flex;
   justify-content: center;
 }
 
-// Área de input e botão
+/* Área de input e botão */
 .guess-section {
   background: transparent;
   border-radius: 18px;
@@ -139,6 +158,7 @@
   align-items: center;
   gap: 10px;
 }
+
 .guess-title {
   font-size: 1.18rem;
   font-weight: 700;
@@ -146,6 +166,7 @@
   margin-bottom: 2px;
   text-align: center;
 }
+
 .guess-subtitle {
   font-size: 1rem;
   color: #fff;
@@ -153,6 +174,7 @@
   margin-bottom: 12px;
   text-align: center;
 }
+
 .guess-input-area {
   width: 100%;
   display: flex;
@@ -160,6 +182,7 @@
   align-items: center;
   gap: 12px;
 }
+
 .submit-guess-btn {
   width: 100%;
   padding: 1rem 2rem;
@@ -173,13 +196,15 @@
   border: none;
   margin-top: 8px;
   transition: filter 0.18s;
+  min-height: 48px;
 }
+
 .submit-guess-btn:disabled {
   filter: grayscale(0.5) brightness(0.8);
   cursor: not-allowed;
 }
 
-// Mensagem de erro
+/* Mensagem de erro */
 .error-message {
   color: #ff6b6b;
   text-align: center;
@@ -188,44 +213,224 @@
   text-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
 }
 
-// Responsividade
+/* Responsividade - Tablet */
 @media (max-width: 1024px) {
   .game-screen-container {
     flex-direction: column;
     align-items: center;
     gap: 24px;
     padding: 24px 8px;
+    margin: 24px 0;
   }
+  
   .status-panel {
     flex: unset;
     width: 100%;
     margin-bottom: 18px;
     align-items: center;
+    padding: 24px 16px;
   }
+  
   .main-panel {
     width: 100%;
-    padding: 24px 8px;
+    padding: 24px 16px;
+  }
+  
+  .character-box {
+    min-width: 280px;
+    padding: 24px 16px;
   }
 }
-@media (max-width: 700px) {
+
+/* Responsividade - Mobile Grande */
+@media (max-width: 768px) {
+  .game-screen-bg {
+    min-height: 100vh;
+    height: auto;
+    padding: 0;
+  }
+  
   .game-screen-container {
     padding: 0;
     margin: 0;
     border-radius: 0;
     box-shadow: none;
+    background: transparent;
+    gap: 16px;
   }
+  
   .main-panel, .status-panel {
     border-radius: 0;
     box-shadow: none;
-    padding: 12px 2vw;
+    padding: 16px 4vw;
+    background: rgba(40, 20, 80, 0.3);
   }
+  
+  .status-panel {
+    padding: 16px 4vw;
+    margin-bottom: 8px;
+  }
+  
   .character-box {
     min-width: 0;
     width: 100%;
-    padding: 18px 4vw 12px 4vw;
+    padding: 16px 4vw 12px 4vw;
+    border-radius: 12px;
   }
+  
   .guess-section {
     max-width: 100vw;
     padding: 0;
+  }
+  
+  .guess-title {
+    font-size: 1.1rem;
+  }
+  
+  .guess-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .submit-guess-btn {
+    padding: 1.2rem 2rem;
+    font-size: 1.1rem;
+    min-height: 48px;
+  }
+  
+  .status-title {
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  
+  .status-row {
+    font-size: 0.9rem;
+  }
+  
+  .give-up-btn {
+    padding: 1rem 0;
+    font-size: 1rem;
+    min-height: 48px;
+  }
+}
+
+/* Responsividade - Mobile Pequeno */
+@media (max-width: 480px) {
+  .game-screen-container {
+    gap: 12px;
+  }
+  
+  .main-panel, .status-panel {
+    padding: 12px 3vw;
+  }
+  
+  .character-box {
+    padding: 12px 3vw 8px 3vw;
+    min-height: 180px;
+  }
+  
+  .guess-title {
+    font-size: 1rem;
+  }
+  
+  .guess-subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .submit-guess-btn {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .status-title {
+    font-size: 1rem;
+  }
+  
+  .status-row {
+    font-size: 0.8rem;
+  }
+  
+  .give-up-btn {
+    padding: 0.8rem 0;
+    font-size: 0.9rem;
+  }
+}
+
+/* Orientação Landscape em Mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .game-screen-bg {
+    min-height: auto;
+    height: auto;
+  }
+  
+  .game-screen-container {
+    margin: 8px 0;
+    gap: 12px;
+  }
+  
+  .main-panel, .status-panel {
+    padding: 12px 3vw;
+  }
+  
+  .character-box {
+    min-height: 160px;
+    padding: 12px 3vw 8px 3vw;
+  }
+  
+  .guess-section {
+    gap: 8px;
+  }
+  
+  .guess-title {
+    font-size: 1rem;
+    margin-bottom: 0;
+  }
+  
+  .guess-subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+  }
+}
+
+/* Melhorias para touch em mobile */
+@media (max-width: 768px) {
+  .submit-guess-btn,
+  .give-up-btn {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  .text-input,
+  .number-input {
+    min-height: 48px;
+    font-size: 16px; /* Previne zoom no iOS */
+  }
+  
+  /* Melhora espaçamento para touch */
+  .guess-input-area {
+    gap: 16px;
+  }
+  
+  .status-info {
+    gap: 12px;
+  }
+  
+  .status-row {
+    padding: 4px 0;
+    min-height: 44px;
+  }
+}
+
+/* Previne scroll horizontal */
+@media (max-width: 768px) {
+  .game-screen-bg,
+  .game-screen-container,
+  .main-panel,
+  .status-panel {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  .character-box {
+    max-width: 100vw;
   }
 }

@@ -243,62 +243,62 @@
 
   * **4.1 Core `EndingScreen.vue` Structure**
 
-      * [ ] **Create `src/views/EndingScreen.vue`:**
+      * [x] **Create `src/views/EndingScreen.vue`:**
           * Add basic `<template>`, `<script setup>`, and `<style scoped>` blocks.
-      * [ ] **Integrate `EndingScreen` into `App.vue`:**
+      * [x] **Integrate `EndingScreen` into `App.vue`:**
           * Use `v-if` to conditionally render `EndingScreen` when `gameStore.currentScreen === 'ending'`.
 
   * **4.2 Leaderboard Component**
 
-      * [ ] **`src/components/LeaderboardTable.vue`:**
-          * [ ] Props: `leaderboardData` (array of objects), `selectedDifficulty` (string).
-          * [ ] Filter `leaderboardData` based on `selectedDifficulty` (or show 'All').
-          * [ ] Render a table with columns: `Rank`, `Name`, `Score`, `Attempts`.
-          * [ ] Use `v-for` to render rows.
-          * [ ] Apply styling for table, rows, and cells.
-          * [ ] **Optional GSAP:** Animate rows appearing or reordering.
+      * [x] **`src/components/LeaderboardTable.vue`:**
+          * [x] Props: `leaderboardData` (array of objects), `selectedDifficulty` (string).
+          * [x] Filter `leaderboardData` based on `selectedDifficulty` (or show 'All').
+          * [x] Render a table with columns: `Rank`, `Name`, `Score`, `Attempts`.
+          * [x] Use `v-for` to render rows.
+          * [x] Apply styling for table, rows, and cells.
+          * [x] **Optional GSAP:** Animate rows appearing or reordering.
 
   * **4.3 `EndingScreen.vue` Content & Logic**
 
-      * [ ] **Background:** Apply "outside castle, opposite view" image (`ending-game.png`) as background.
-      * [ ] **Game Outcome Message:**
-          * [ ] Display "Game Over" or "MYSTICAL NUMBER CASTLE" + "THE GENIE'S CHALLENGE".
-          * [ ] Conditionally display win/loss message:
+      * [x] **Background:** Apply "outside castle, opposite view" image (`ending-game.png`) as background.
+      * [x] **Game Outcome Message:**
+          * [x] Display "Game Over" or "MYSTICAL NUMBER CASTLE" + "THE GENIE'S CHALLENGE".
+          * [x] Conditionally display win/loss message:
               * If `gameStore.gameWon`: "Congratulations, {{ gameStore.playerName }}\! You guessed the number {{ gameStore.targetNumber }} in {{ gameStore.attemptsUsed }} attempts\!"
               * If not `gameStore.gameWon`: "Game Over. The number was {{ gameStore.targetNumber }}. Better luck next time\!"
-          * [ ] Apply appropriate styling (e.g., gold/yellow for win, red for loss).
-      * [ ] **Leaderboard Section:**
-          * [ ] Add "Leaderboard" title.
-          * [ ] **Difficulty Tabs:**
-              * [ ] Create local reactive `currentLeaderboardFilter: 'all'`.
-              * [ ] Use `v-for` to render "All", "Easy", "Medium", "Hard" buttons.
-              * [ ] Apply `active` class based on `currentLeaderboardFilter`.
-              * [ ] On click, update `currentLeaderboardFilter`.
-          * [ ] **Integrate `LeaderboardTable.vue`:**
-              * [ ] Pass `gameStore.leaderboard` (or a filtered version) to `leaderboardData`.
-              * [ ] Pass `currentLeaderboardFilter` to `selectedDifficulty`.
-      * [ ] **"Play Again" Button:**
-          * [ ] Use `ActionButton.vue`.
-          * [ ] On `click`, call `gameStore.setScreen('meeting')` to restart.
+          * [x] Apply appropriate styling (e.g., gold/yellow for win, red for loss).
+      * [x] **Leaderboard Section:**
+          * [x] Add "Leaderboard" title.
+          * [x] **Difficulty Tabs:**
+              * [x] Create local reactive `currentLeaderboardFilter: 'all'`.
+              * [x] Use `v-for` to render "All", "Easy", "Medium", "Hard" buttons.
+              * [x] Apply `active` class based on `currentLeaderboardFilter`.
+              * [x] On click, update `currentLeaderboardFilter`.
+          * [x] **Integrate `LeaderboardTable.vue`:**
+              * [x] Pass `gameStore.leaderboard` (or a filtered version) to `leaderboardData`.
+              * [x] Pass `currentLeaderboardFilter` to `selectedDifficulty`.
+      * [x] **"Play Again" Button:**
+          * [x] Use `ActionButton.vue`.
+          * [x] On `click`, call `gameStore.setScreen('meeting')` to restart.
 
   * **4.4 Update `gameStore.js` Actions & Persistence**
 
-      * [ ] **`calculateScore()` utility function (`src/utils/scoreCalculator.js`):**
+      * [x] **`calculateScore()` utility function (`src/utils/scoreCalculator.js`):**
           * Takes `attemptsUsed`, `minRange`, `maxRange`, `difficulty`.
           * Returns a score (e.g., `(maxRange - minRange) / attemptsUsed * difficultyMultiplier`).
-      * [ ] **`addScoreToLeaderboard()` action:**
-          * [ ] Inside `endGame(true)`:
+      * [x] **`addScoreToLeaderboard()` action:**
+          * [x] Inside `endGame(true)`:
               * `const score = calculateScore(...)`
               * `this.leaderboard.push({ name: this.playerName, score, attempts: this.attemptsUsed, difficulty: this.difficulty })`
               * `this.leaderboard.sort((a, b) => b.score - a.score || a.attempts - b.attempts)` (Sort by score descending, then attempts ascending)
-              * [ ] Keep only top 10 scores (`this.leaderboard = this.leaderboard.slice(0, 10)`).
-      * [ ] **`saveLeaderboard()` action:**
-          * [ ] `localStorage.setItem('mysticalNumberCastleLeaderboard', JSON.stringify(this.leaderboard))`
-      * [ ] **`loadLeaderboard()` action:**
-          * [ ] `const storedLeaderboard = localStorage.getItem('mysticalNumberCastleLeaderboard')`
-          * [ ] `if (storedLeaderboard) { this.leaderboard = JSON.parse(storedLeaderboard); }`
-      * [ ] **Call `loadLeaderboard()` on App Initialization:** In `App.vue`'s `onMounted` hook, call `gameStore.loadLeaderboard()`.
-      * [ ] **Initial Commit:** Commit Ending Screen and Leaderboard functionality.
+              * [x] Keep only top 10 scores (`this.leaderboard = this.leaderboard.slice(0, 10)`).
+      * [x] **`saveLeaderboard()` action:**
+          * [x] `localStorage.setItem('mysticalNumberCastleLeaderboard', JSON.stringify(this.leaderboard))`
+      * [x] **`loadLeaderboard()` action:**
+          * [x] `const storedLeaderboard = localStorage.getItem('mysticalNumberCastleLeaderboard')`
+          * [x] `if (storedLeaderboard) { this.leaderboard = JSON.parse(storedLeaderboard); }`
+      * [x] **Call `loadLeaderboard()` on App Initialization:** In `App.vue`'s `onMounted` hook, call `gameStore.loadLeaderboard()`.
+      * [x] **Initial Commit:** Commit Ending Screen and Leaderboard functionality.
 
 -----
 

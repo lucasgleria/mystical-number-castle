@@ -7,7 +7,7 @@
       :value="modelValue"
       :min="min"
       :max="max"
-      @input="onInput"
+      @input="handleInput"
       class="number-input"
     />
   </div>
@@ -24,15 +24,12 @@ defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-function onInput(event) {
-  let value = event.target.value;
-  if (value === '' || value === null) {
-    emit('update:modelValue', null);
-    return;
+const handleInput = (event) => {
+  const value = parseInt(event.target.value);
+  if (!isNaN(value)) {
+    emit('update:modelValue', value);
   }
-  value = Number(value);
-  emit('update:modelValue', value);
-}
+};
 </script>
 
 <style scoped>
@@ -59,6 +56,9 @@ function onInput(event) {
   color: #FFFFFF;
   font-size: 1rem;
   transition: all 0.3s ease;
+  min-height: 44px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .number-input::placeholder {
@@ -72,7 +72,7 @@ function onInput(event) {
   background: rgba(60, 60, 136, 0.3);
 }
 
-/* Remove arrows from number input */
+/* Remove setas do input number */
 .number-input::-webkit-outer-spin-button,
 .number-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -81,5 +81,50 @@ function onInput(event) {
 
 .number-input[type=number] {
   -moz-appearance: textfield;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+  .input-label {
+    font-size: 0.9rem;
+  }
+  
+  .number-input {
+    padding: 1rem 1.2rem;
+    font-size: 16px;
+    min-height: 48px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .number-input {
+    padding: 0.8rem 1rem;
+    font-size: 16px;
+    min-height: 48px;
+  }
+  
+  .input-label {
+    font-size: 0.85rem;
+  }
+}
+
+/* Melhorias para touch */
+@media (max-width: 768px) {
+  .number-input {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
+  .number-input:focus {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* Previne zoom em dispositivos touch */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .number-input {
+    font-size: 16px;
+  }
 }
 </style> 
